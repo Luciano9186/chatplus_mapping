@@ -68,22 +68,22 @@ joint.dia.Element.define('qad.Question', {
     optionHeight: 30,
     questionHeight: 45,
     paddingBottom: 30,
-    minWidth: 150,
+    minWidth: 250,
     ports: {
         groups: {
             'in': {
-                position: 'top',
+                position: 'left',
                 attrs: {
                     circle: {
                         magnet: 'passive',
-                        stroke: 'white',
-                        fill: '#feb663',
+                        stroke: '#90A4AE',
+                        fill: 'white',
                         r: 14
                     },
                     text: {
                         pointerEvents: 'none',
                         fontSize: 12,
-                        fill: 'white'
+                        fill: 'black'
                     }
                 },
                 label: {
@@ -98,8 +98,8 @@ joint.dia.Element.define('qad.Question', {
                 attrs: {
                     'circle': {
                         magnet: true,
-                        stroke: 'none',
-                        fill: '#31d0c6',
+                          stroke: '#90A4AE',
+						fill: 'white',
                         r: 14
                     }
                 }
@@ -125,8 +125,8 @@ joint.dia.Element.define('qad.Question', {
             fill: {
                 type: 'linearGradient',
                 stops: [
-                    { offset: '0%', color: '#FEB663' },
-                    { offset: '100%', color: '#31D0C6' }
+                    { offset: '0%', color: '#F3D2D1' },
+                    { offset: '100%', color: '#F3D2D1' }
                 ],
                 // Top-to-bottom gradient.
                 attrs: { x1: '0%', y1: '0%', x2: '0%', y2: '100%' }
@@ -139,7 +139,9 @@ joint.dia.Element.define('qad.Question', {
             fill: 'white'
         },
         '.btn-remove-option': {
-          refY: 0,
+         xAlignment: 210,
+		 yAlignment: 13,
+		 fill:'gray'
         },
         '.options': {
             refX: 0
@@ -156,32 +158,62 @@ joint.dia.Element.define('qad.Question', {
             yAlignment: 'middle'
         },
         '.question-text': {
-            fill: 'white',
+            fill: 'black',
             refX: '50%',
-            refY: 15,
+            refY: '10%',
             fontSize: 15,
             textAnchor: 'middle',
             style: {
                 textShadow: '1px 1px 0px gray'
             }
         },
+		
+		    '.end-text': {
+            fill: '#7A827D',
+            refX: '50%',
+            refY: '85%',
+            fontSize: 15,
+            textAnchor: 'middle',
+        },
 
         // Options styling.
         '.option-rect': {
+			//corner top left and right
             rx: 3,
+			//corner bottom left and right
             ry: 3,
+			//margin left 10
+			refX: 20,
+            stroke: '#d14c43',
+            fill: '#FFFFFF',
+			width:'210',
+			height:'50'
+        },
+		'.header-rect': {
+			rx:5,
+			ry:5,
+			//margin left and right
+			refX: 5,
+			refY: 5,
             stroke: 'white',
-            strokeWidth: 1,
-            strokeOpacity: .5,
-            fillOpacity: .5,
-            fill: 'white',
-            refWidth: '100%'
+            fill: '#FFFFFF',
+			width:'240',
+			height:'30',
+        },
+		'.header-rect-mask': {
+			//margin left and right
+			refX:5,
+			refY: 30,
+            stroke: 'white',
+            fill: '#FFFFFF',
+			width:'240',
+			height:'5',
         }
     }
 }, {
 
-    markup: '<rect class="body"/><text class="question-text"/><g class="options"></g><path class="btn-add-option" d="M5,0 10,0 10,5 15,5 15,10 10,10 10,15 5,15 5,10 0,10 0,5 5,5z"/>',
-    optionMarkup: '<g class="option"><rect class="option-rect"/><image class="btn-remove-option" xlink:href="image/icn_edit.png" width="17" height="22"></image><text class="option-text"/><p>Test</p></g>',
+    markup: '<rect class="body"/><g><text class="question-text"/><text class="end-text"/><rect class="header-rect" z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect></g><g class="options"></g>',
+    optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {
 
@@ -189,6 +221,7 @@ joint.dia.Element.define('qad.Question', {
         this.on('change:options', this.onChangeOptions, this);
         this.on('change:question', function() {
             this.attr('.question-text/text', this.get('question') || '');
+			this.attr('.end-text/text', this.get('count') || '');
             this.autoresize();
         }, this);
 
@@ -201,6 +234,7 @@ joint.dia.Element.define('qad.Question', {
 
         this.attr('.options/refY', this.get('questionHeight'), { silent: true });
         this.attr('.question-text/text', this.get('question'), { silent: true });
+		   this.attr('.end-text/text', this.get('count'), { silent: true });
 
         this.onChangeOptions();
     },
