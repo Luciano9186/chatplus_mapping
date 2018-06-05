@@ -243,8 +243,8 @@ app.AppView = joint.mvc.View.extend({
 
         this.paper = new joint.dia.Paper({
             el: this.$('#paper'),
-            width: 800,
-            height: 600,
+            width: 1920,
+            height: 1080,
             gridSize: 10,
             snapLinks: {
                 radius: 75
