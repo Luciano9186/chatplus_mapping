@@ -1,16 +1,3 @@
-/*! Rappid v2.3.0 - HTML5 Diagramming Framework - TRIAL VERSION
-
-Copyright (c) 2015 client IO
-
- 2018-06-03 
-
-
-This Source Code Form is subject to the terms of the Rappid Trial License
-, v. 2.0. If a copy of the Rappid License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
- or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
-
-
 joint.dia.Element.define('qad.Answer', {
     attrs: {
         rect: {
@@ -212,7 +199,7 @@ joint.dia.Element.define('qad.Question', {
     }
 }, {
 
-    markup: '<rect class="body"/><g><text class="question-text"/><text class="end-text"/><rect class="header-rect" z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect></g><g class="options"></g>',
+    markup: '<rect class="body"/><g><text class="question-text"/><text class="end-text"/></g><g class="options"></g>',
     optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {

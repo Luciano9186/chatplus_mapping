@@ -1,27 +1,3 @@
-/*! Rappid v2.3.0 - HTML5 Diagramming Framework - TRIAL VERSION
-
-Copyright (c) 2015 client IO
-
- 2018-06-03 
-
-
-This Source Code Form is subject to the terms of the Rappid Trial License
-, v. 2.0. If a copy of the Rappid License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
- or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
-
-
-// @import jquery.js
-// @import lodash.js
-// @import backbone.js
-// @import geometry.js
-// @import vectorizer.js
-// @import joint.clean.js
-// @import joint.shapes.qad.js
-// @import selection.js
-// @import factory.js
-// @import snippet.js
-
 var app = app || {};
 var qad = window.qad || {};
 
@@ -305,7 +281,7 @@ app.AppView = joint.mvc.View.extend({
 
     loadExample: function() {
 
-        this.graph.fromJSON({"cells":[{"type":"qad.Question","size":{"width":201.8984375,"height":125},"position":{"x":350,"y":68},"angle":0,"count":"2","question":"Does the thing work?","options":[{"id":"yes","text":"Yes"},{"id":"no","text":"No"}],"id":"d849d917-8a43-4d51-9e99-291799c144db","z":1,"attrs":{".options":{"refY":45},".question-text":{"text":"Does the thing work?"},".option-yes":{"transform":"translate(0, 0)","dynamic":true},".option-yes .option-rect":{"height":30,"dynamic":true},".option-yes .option-port .port-body":{"port":"yes","dynamic":true},".option-yes .option-text":{"text":"Yes","dynamic":true},".option-no":{"transform":"translate(0, 30)","dynamic":true},".option-no .option-rect":{"height":30,"dynamic":true},".option-no .option-port .port-body":{"port":"no","dynamic":true},".option-no .option-text":{"text":"No","dynamic":true},".inPorts>.port-in>.port-label":{"text":"In"},".inPorts>.port-in>.port-body":{"port":{"id":"in","type":"in","label":"In"}},".inPorts>.port-in":{"ref":".body","ref-x":0.5}}},{"type":"qad.Answer","size":{"width":223.796875,"height":66.8},"inPorts":[{"id":"in","label":"In"}],"outPorts":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"position":{"x":45,"y":102},"angle":0,"answer":"Don't mess about with it.","id":"4073e883-1cc6-46a5-b22d-688ca1934324","z":2,"attrs":{"text":{"text":"Don't mess about with it."}}},{"type":"link","source":{"id":"4073e883-1cc6-46a5-b22d-688ca1934324","selector":"g:nth-child(1) g:nth-child(3) g:nth-child(1) g:nth-child(4) circle:nth-child(1)      ","port":"yes"},"target":{"id":"d849d917-8a43-4d51-9e99-291799c144db"},"router":{"name":"manhattan"},"connector":{"name":"rounded"},"id":"9d87214a-7b08-47ce-9aec-8e49ed7ae929","embeds":"","z":3,"attrs":{".marker-target":{"d":"M 10 0 L 0 5 L 10 10 z","fill":"#BDBDBD","stroke":"#BDBDBD"},".connection":{"stroke":"#BDBDBD","strokeWidth":2}}}]});
+        this.graph.fromJSON({"cells":[{"type":"qad.Question","size":{"width":201.8984375,"height":125},"position":{"x":350,"y":68},"angle":0,"count":"2","question":"Does the thing work?","options":[{"id":"yes","text":"Yes"},{"id":"no","text":"No"}],"id":"d849d917-8a43-4d51-9e99-291799c144db","z":1,"attrs":{".options":{"refY":45},".question-text":{"text":"Does the thing work?"},".option-yes":{"transform":"translate(0, 0)","dynamic":true},".option-yes .option-rect":{"height":30,"dynamic":true},".option-yes .option-port .port-body":{"port":"yes","dynamic":true},".option-yes .option-text":{"text":"Yes","dynamic":true},".option-no":{"transform":"translate(0, 30)","dynamic":true},".option-no .option-rect":{"height":30,"dynamic":true},".option-no .option-port .port-body":{"port":"no","dynamic":true},".option-no .option-text":{"text":"No","dynamic":true},".inPorts>.port-in>.port-label":{"text":"In"},".inPorts>.port-in>.port-body":{"port":{"id":"in","type":"in","label":"In"}},".inPorts>.port-in":{"ref":".body","ref-x":0.5}}},{"type":"qad.Answer","size":{"width":223.796875,"height":66.8},"inPorts":[{"id":"in","label":"In"}],"outPorts":[{"id":"yes","label":"Yes"},{"id":"no","label":"No"}],"position":{"x":45,"y":102},"angle":0,"answer":"Start chat bot.","id":"4073e883-1cc6-46a5-b22d-688ca1934324","z":2,"attrs":{"text":{"text":"Don't mess about with it."}}},{"type":"link","source":{"id":"4073e883-1cc6-46a5-b22d-688ca1934324","selector":"g:nth-child(1) g:nth-child(3) g:nth-child(1) g:nth-child(4) circle:nth-child(1)      ","port":"yes"},"target":{"id":"d849d917-8a43-4d51-9e99-291799c144db"},"router":{"name":"manhattan"},"connector":{"name":"rounded"},"id":"9d87214a-7b08-47ce-9aec-8e49ed7ae929","embeds":"","z":3,"attrs":{".marker-target":{"d":"M 10 0 L 0 5 L 10 10 z","fill":"#BDBDBD","stroke":"#BDBDBD"},".connection":{"stroke":"#BDBDBD","strokeWidth":2}}}]});
     },
 
     clear: function() {
