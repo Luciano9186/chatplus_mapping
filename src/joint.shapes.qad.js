@@ -95,7 +95,7 @@ joint.dia.Element.define('qad.Question', {
         items: [{
             group: 'in',
             attrs: {
-                text: { text: 'in' }
+                text: { text: '' }
             }
         }]
     },
