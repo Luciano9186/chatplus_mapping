@@ -10,9 +10,9 @@ app.Factory = {
             question: text,
             inPorts: [{ id: 'in', label: 'In' }],
             options: [
-                { id: 'yes', text: 'Yes' },
-                { id: 'no', text: 'No' }
-            ]
+                { id: 'question', text: 'Input Question Here.' },
+            ],
+			count: '1'
         });
     },
 

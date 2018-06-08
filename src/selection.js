@@ -10,7 +10,7 @@ app.SelectionView = joint.mvc.View.extend({
         'fill': 'none',
         'stroke': '#C6C7E2',
         'stroke-width': 1,
-        'pointer-events': 'none'
+        'pointer-events': 'none',
     }),
 
     init: function() {
