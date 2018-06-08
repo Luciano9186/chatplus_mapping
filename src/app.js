@@ -151,27 +151,28 @@ app.AppView = joint.mvc.View.extend({
     initializeHalo: function() {
 		
         this.paper.on('element:pointerup', function(elementView, evt) {
-	
-            var halo = new joint.ui.Halo({
-                cellView: elementView,
-                useModelGeometry: true,
-				boxContent: false
-            });
-
-            halo.removeHandle('resize')
-                .removeHandle('rotate')
-                .removeHandle('fork')
-                .removeHandle('link')
-				.removeHandle('unlink')
-				.addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
-				.changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
-                .render();
-				
-				
-			halo.on('action:addnew:pointerdown', function(evt) {
-					evt.stopPropagation();
-					alert('Implement Add New Item.');
+		if(elementView.model.get('type') === 'qad.Question'){
+				var halo = new joint.ui.Halo({
+					cellView: elementView,
+					useModelGeometry: true,
+					boxContent: false
 				});
+
+				halo.removeHandle('resize')
+					.removeHandle('rotate')
+					.removeHandle('fork')
+					.removeHandle('link')
+					.removeHandle('unlink')
+					.addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
+					.changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
+					.render();
+					
+					
+				halo.on('action:addnew:pointerdown', function(evt) {
+						evt.stopPropagation();
+						alert('Implement Add New Item.');
+					});
+		}
 
         }, this);
     },
