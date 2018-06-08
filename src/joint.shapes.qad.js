@@ -55,7 +55,7 @@ joint.dia.Element.define('qad.Question', {
     optionHeight: 30,
     questionHeight: 45,
     paddingBottom: 30,
-    minWidth: 250,
+    minWidth: 260,
     ports: {
         groups: {
             'in': {
@@ -180,7 +180,7 @@ joint.dia.Element.define('qad.Question', {
 			rx:5,
 			ry:5,
 			//margin left and right
-			refX: 5,
+			refX: 10,
 			refY: 5,
             stroke: 'white',
             fill: '#FFFFFF',
@@ -189,7 +189,7 @@ joint.dia.Element.define('qad.Question', {
         },
 		'.header-rect-mask': {
 			//margin left and right
-			refX:5,
+			refX:10,
 			refY: 30,
             stroke: 'white',
             fill: '#FFFFFF',
