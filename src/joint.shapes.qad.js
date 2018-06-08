@@ -52,7 +52,7 @@ joint.shapes.qad.AnswerView = joint.dia.ElementView.extend({
 
 joint.dia.Element.define('qad.Question', {
 
-    optionHeight: 30,
+    optionHeight: 40,
     questionHeight: 45,
     paddingBottom: 30,
     minWidth: 260,
@@ -65,7 +65,7 @@ joint.dia.Element.define('qad.Question', {
                         magnet: 'passive',
                         stroke: '#90A4AE',
                         fill: 'white',
-                        r: 14
+                        r: 10
                     },
                     text: {
                         pointerEvents: 'none',
@@ -87,7 +87,7 @@ joint.dia.Element.define('qad.Question', {
                         magnet: true,
                           stroke: '#90A4AE',
 						fill: 'white',
-                        r: 14
+                        r: 10
                     }
                 }
             }
@@ -106,8 +106,8 @@ joint.dia.Element.define('qad.Question', {
         '.body': {
             refWidth: '100%',
             refHeight: '100%',
-            rx: '1%',
-            ry: '2%',
+            rx: 5,
+            ry: 5,
             stroke: 'none',
             fill: {
                 type: 'linearGradient',
@@ -127,7 +127,7 @@ joint.dia.Element.define('qad.Question', {
         },
         '.btn-remove-option': {
          xAlignment: 210,
-		 yAlignment: 13,
+		 yAlignment: 16,
 		 fill:'gray'
         },
         '.options': {
@@ -149,10 +149,7 @@ joint.dia.Element.define('qad.Question', {
             refX: '50%',
             refY: '10%',
             fontSize: 15,
-            textAnchor: 'middle',
-            style: {
-                textShadow: '1px 1px 0px gray'
-            }
+            textAnchor: 'middle'
         },
 		
 		    '.end-text': {
@@ -175,7 +172,7 @@ joint.dia.Element.define('qad.Question', {
             fill: '#FFFFFF',
 			width:'210',
 			height:'40'
-        },
+		},
 		'.header-rect': {
 			rx:5,
 			ry:5,
@@ -203,7 +200,6 @@ joint.dia.Element.define('qad.Question', {
     optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {
-
         joint.dia.Element.prototype.initialize.apply(this, arguments);
         this.on('change:options', this.onChangeOptions, this);
         this.on('change:question', function() {

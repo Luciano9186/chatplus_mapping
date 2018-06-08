@@ -21,12 +21,12 @@ app.SelectionView = joint.mvc.View.extend({
 
         _.invoke(this.boxes, 'remove');
 
-        this.boxes = this.model.map(function(element) {
-            return this.BOX_TEMPLATE
-                .clone()
-                .attr(element.getBBox().inflate(this.PADDING))
-                .appendTo(this.options.paper.viewport);
-        }, this);
+	//    this.boxes = this.model.map(function(element) {
+     //       return this.BOX_TEMPLATE
+     //           .clone()
+     //           .attr(element.getBBox().inflate(this.PADDING))
+     //           .appendTo(this.options.paper.viewport);
+     //  }, this);
 
         return this;
     },

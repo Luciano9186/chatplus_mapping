@@ -10,7 +10,7 @@ app.Factory = {
             question: text,
             inPorts: [{ id: 'in', label: 'In' }],
             options: [
-                { id: 'question', text: 'Input Question Here.' },
+                { id: 'question', text: 'Input Question Here.', height: '50' },
             ],
 			count: '1'
         });
@@ -33,11 +33,11 @@ app.Factory = {
             attrs: {
                 '.marker-target': {
                     d: 'M 10 0 L 0 5 L 10 10 z',
-                    fill: '#6a6c8a',
-                    stroke: '#6a6c8a'
+                    fill: '#BDBDBD',
+                    stroke: '#BDBDBD'
                 },
                 '.connection': {
-                    stroke: '#6a6c8a',
+                    stroke: '#BDBDBD',
                     strokeWidth: 2
                 }
             }
