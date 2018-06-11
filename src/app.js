@@ -20,6 +20,8 @@ app.AppView = joint.mvc.View.extend({
         this.initializeSelection();
         this.initializeHalo();
         this.initializeInlineTextEditor();
+		this.initializeToolbar();
+		this.initializeNavigator();
         // this.initializeTooltips();
 
         this.loadExample();
@@ -46,6 +48,49 @@ app.AppView = joint.mvc.View.extend({
             right: '#paper',
             padding: 20
         });
+    },
+	
+	initializeNavigator: function(){
+		var nav = new joint.ui.Navigator({
+			paperScroller: this.paperScroller,
+			width: 300,
+			height: 200,
+			padding: 10,
+			zoomOptions: { max: 2, min: 0.2 }
+		});
+		nav.$el.appendTo('#navigator');
+		nav.render();
+	},
+	
+   initializeToolbar: function() {
+	   var paper = new joint.dia.Paper({
+    width: 2000,
+    height: 2000,
+    model: this.graph
+});
+    var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
+			//paper: paper,
+			paper: paper,
+			autoResizePaper: true,
+			cursor:'graph'
+		});
+		
+		 // this.$('#paper').append(paperScroller.el);
+         //   paperScroller.render().center();
+			paperScroller.$el.appendTo('#paper');
+			paperScroller.render();
+			
+		var toolbar = new joint.ui.Toolbar({
+			// initialize tools with default settings
+			tools: ['zoomIn','zoomSlider','zoomOut'],
+			references: {
+				paperScroller: this.paperScroller
+			}
+		});
+		toolbar.$el.appendTo('#toolbar-container');
+		toolbar.render().center;
+
+		//toolbar.render().$el.appendTo('#toolbar-container');
     },
 
     initializeInlineTextEditor: function() {
@@ -154,7 +199,6 @@ app.AppView = joint.mvc.View.extend({
 		if(elementView.model.get('type') === 'qad.Question'){
 				var halo = new joint.ui.Halo({
 					cellView: elementView,
-					useModelGeometry: true,
 					boxContent: false
 				});
 
@@ -245,7 +289,6 @@ app.AppView = joint.mvc.View.extend({
                 return magnet.getAttribute('magnet') !== 'passive';
             }
         });
-
         this.graph = this.paper.model;
     },
 
