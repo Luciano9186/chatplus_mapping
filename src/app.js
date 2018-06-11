@@ -63,11 +63,11 @@ app.AppView = joint.mvc.View.extend({
 	},
 	
    initializeToolbar: function() {
-	   var paper = new joint.dia.Paper({
-    width: 2000,
-    height: 2000,
-    model: this.graph
-});
+	var paper = new joint.dia.Paper({
+			width: 2000,
+			height: 2000,
+			model: this.graph
+		});
     var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
 			//paper: paper,
 			paper: paper,
