@@ -163,15 +163,9 @@ app.AppView = joint.mvc.View.extend({
 					.removeHandle('fork')
 					.removeHandle('link')
 					.removeHandle('unlink')
-					.addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
+					// .addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
 					.changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
 					.render();
-					
-					
-				halo.on('action:addnew:pointerdown', function(evt) {
-						evt.stopPropagation();
-						alert('Implement Add New Item.');
-					});
 		}
 
         }, this);
@@ -229,8 +223,8 @@ app.AppView = joint.mvc.View.extend({
 
         this.paper = new joint.dia.Paper({
             el: this.$('#paper'),
-            width: 1920,
-            height: 1080,
+            width: 1200,
+            height: 800,
             gridSize: 10,
             snapLinks: {
                 radius: 75

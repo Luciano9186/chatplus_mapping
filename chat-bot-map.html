@@ -16,7 +16,7 @@
     <link href="css/snippet.css" rel="stylesheet"/>
     <link href="css/dialog.css" rel="stylesheet"/>
     <link href="css/index.css" rel="stylesheet"/>
-
+    <link href="css/left_menu.css" rel="stylesheet" />
 
     <script>
       SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
@@ -26,20 +26,27 @@
 
   </head>
   <body>
+    <div class="sidenav">
+      <a href="#save">Save</a>
+      <a href="#reset">Reset</a>
+      <a href="#btn_preview">Preview</a>
+      <a href="#other">Bla Bla</a>
+    </div>
 
-    <section id="app">
+    <div class="main">
+      <section id="app">
 
-      <div id="paper"></div>
+        <div id="paper"></div>
 
-      <div id="statusbar">
-        <span class="message">Welcome to the QAD Tool!</span>
-      </div>
+        <div id="statusbar">
+          <span class="message">Welcome to the QAD Tool!</span>
+        </div>
 
-      <div id="preview" class="preview">
-      </div>
+        <div id="preview" class="preview">
+        </div>
 
-    </section>
-
+      </section>
+    </div>
     <!-- Rappid/JointJS dependencies: -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/lodash/index.js"></script>

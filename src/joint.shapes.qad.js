@@ -120,14 +120,15 @@ joint.dia.Element.define('qad.Question', {
             }
         },
         '.btn-add-option': {
-            refX: 10,
-            refDy: -22,
+            refX: '103%',
+            refDy: 5,
             cursor: 'pointer',
-            fill: 'white'
+            fill: 'black'
         },
         '.btn-remove-option': {
          xAlignment: 210,
 		 yAlignment: 16,
+         cursor: 'pointer',
 		 fill:'gray'
         },
         '.options': {
@@ -196,7 +197,7 @@ joint.dia.Element.define('qad.Question', {
     }
 }, {
 
-    markup: '<rect class="body"/><g><text class="end-text"/><rect class="header-rect"  z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect><text class="question-text">Hello</text></g><g class="options"></g>',
+    markup: '<rect class="body"/><g><text class="end-text"/><rect class="header-rect"  z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect><text class="question-text">Hello</text></g><g class="options"></g><path class="btn-add-option" d="M5,0 10,0 10,5 15,5 15,10 10,10 10,15 5,15 5,10 0,10 0,5 5,5z"/>',
     optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {
