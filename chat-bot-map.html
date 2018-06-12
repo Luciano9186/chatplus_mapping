@@ -17,7 +17,8 @@
     <link href="css/dialog.css" rel="stylesheet"/>
     <link href="css/index.css" rel="stylesheet"/>
     <link href="css/left_menu.css" rel="stylesheet" />
-
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script>
       SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function (toElement) {
           return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
@@ -27,10 +28,8 @@
   </head>
   <body>
     <div class="sidenav">
-      <a href="#save">Save</a>
-      <a href="#reset">Reset</a>
-      <a href="#btn_preview">Preview</a>
-      <a href="#other">Bla Bla</a>
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#save" style="width: 100%; margin-bottom: 10px">Save</button>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="width: 100%;">Group</button>
     </div>
 
     <div class="main">
@@ -44,7 +43,36 @@
 
         <div id="preview" class="preview">
         </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Question List</h4>
+              </div>
+              <div class="modal-body">
+                <div id="modal">
+                  <p id="question-1" class="add-question-modal">Question 1.</p>
+                  <p id="question-2" class="add-question-modal">Question 2.</p>
+                  <p id="question-3" class="add-question-modal">Question 3.</p>
+                  <p id="question-4" class="add-question-modal">Question 4.</p>
+                  <p id="question-5" class="add-question-modal">Question 5.</p>
+                  <p id="question-6" class="add-question-modal">Question 6.</p>
+                </div>
+                <div id="another-div" style="display: none">
+                  <div id="output-val"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </section>
     </div>
     <!-- Rappid/JointJS dependencies: -->
@@ -63,5 +91,12 @@
     <script src="src/index.js"></script>
 
     <script>joint.setTheme('modern');</script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   </body>
 </html>
