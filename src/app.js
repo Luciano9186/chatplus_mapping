@@ -195,7 +195,7 @@ app.AppView = joint.mvc.View.extend({
 					.removeHandle('fork')
 					.removeHandle('link')
 					.removeHandle('unlink')
-					.removeHandle('remove')
+					// .removeHandle('remove')
 					// .addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
 					.changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
 					.render();

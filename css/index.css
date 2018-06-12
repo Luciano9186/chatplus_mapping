@@ -30,10 +30,10 @@ html, body {
 #toolbar-container{
     background-color: blue;
     position: fixed;
-    right: 150px;
+    right: 10px;
     z-index: 1;
     height: 50px;
-	top:50px;
+	top:10px;
 }
 
 #navigator {
