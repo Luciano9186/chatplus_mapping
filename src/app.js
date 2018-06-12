@@ -11,7 +11,8 @@ app.AppView = joint.mvc.View.extend({
         'click #toolbar .preview-dialog': 'previewDialog',
         'click #toolbar .code-snippet': 'showCodeSnippet',
         'click #toolbar .load-example': 'loadExample',
-        'click #toolbar .clear': 'clear'
+        'click #toolbar .clear': 'clear',
+        'click #modal .add-question-modal': 'addQuestionModal',
     },
 
     init: function() {
@@ -267,7 +268,7 @@ app.AppView = joint.mvc.View.extend({
 
         this.paper = new joint.dia.Paper({
             el: this.$('#paper'),
-            width: 1200,
+            width: 1000,
             height: 800,
             gridSize: 10,
             snapLinks: {
@@ -301,6 +302,13 @@ app.AppView = joint.mvc.View.extend({
 
         app.Factory.createQuestion('Question').addTo(this.graph);
         this.status('Question added.');
+    },
+
+    addQuestionModal: function() {
+        var text = $("#output-val").text();
+        app.Factory.createQuestion(text).addTo(this.graph);
+        this.status('Question added.');
+        $('#myModal').modal('hide');
     },
 
     addAnswer: function() {
@@ -363,4 +371,11 @@ app.AppView = joint.mvc.View.extend({
 
         dialog.open();
     }
+});
+$(document).ready(function(){
+    $('#modal').on('click', '.add-question-modal', function(e){
+        e.preventDefault();
+        var txt = $(this).text();
+        $("#output-val").text(txt);
+    });
 });
