@@ -105,9 +105,8 @@ joint.dia.Element.define('qad.Question', {
         },
         '.body': {
             refWidth: '100%',
-            refHeight: '100%',
-            rx: 5,
-            ry: 5,
+            refHeight: '105%',
+			rx: 3,
             stroke: 'none',
             fill: {
                 type: 'linearGradient',
@@ -147,18 +146,18 @@ joint.dia.Element.define('qad.Question', {
         },
         '.question-text': {
             fill: 'black',
-            refX: '50%',
-            refY: '10%',
+            refX: 130,
+            refY: 15,
             fontSize: 15,
             textAnchor: 'middle'
         },
 		
 		    '.end-text': {
             fill: '#7A827D',
-            refX: '50%',
-            refY: '85%',
+            refX: 130,
+			refY: '100%',
             fontSize: 15,
-            textAnchor: 'middle',
+            textAnchor: 'end',
         },
 
         // Options styling.
@@ -193,11 +192,21 @@ joint.dia.Element.define('qad.Question', {
             fill: '#FFFFFF',
 			width:'240',
 			height:'5',
+        },
+		'.end-rect': {
+			//corner bottom left and right
+			//margin left 10
+			ry: 5,
+			refY: '100%',
+            stroke: '#F3D2D1',
+            fill: '#F3D2D1',
+			width:'260',
+			height:'20'
         }
     }
 }, {
 
-    markup: '<rect class="body"/><g><text class="end-text"/><rect class="header-rect"  z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect><text class="question-text">Hello</text></g><g class="options"></g><path class="btn-add-option" d="M5,0 10,0 10,5 15,5 15,10 10,10 10,15 5,15 5,10 0,10 0,5 5,5z"/>',
+    markup: '<rect class="body"/><g><rect class="end-rect"/><text class="end-text"/><rect class="header-rect"  z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect><text class="question-text">Hello</text></g><g class="options"></g><path class="btn-add-option" d="M5,0 10,0 10,5 15,5 15,10 10,10 10,15 5,15 5,10 0,10 0,5 5,5z"/>',
     optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {
@@ -271,7 +280,7 @@ joint.dia.Element.define('qad.Question', {
     autoresize: function() {
 
         var options = this.get('options') || [];
-        var gap = this.get('paddingBottom') || 20;
+        var gap = 10;
         var height = options.length * this.get('optionHeight') + this.get('questionHeight') + gap;
         var width = joint.util.measureText(this.get('question'), {
             fontSize: this.attr('.question-text/fontSize')

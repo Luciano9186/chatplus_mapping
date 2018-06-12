@@ -2,4 +2,43 @@ html, body {
     margin: 0; 
     padding: 0; 
     font-family: Arial;
+	 overflow-x:hidden;
 }
+
+#stencil-container{
+	position: fixed;
+    left: 60px;
+    top: 54px;
+    bottom: 0;
+    width: 180px;
+    background-color: #eaf0f3;
+    border-right: 1px solid #e2e5e8;
+    z-index: 1;
+}    
+
+#paper{
+    width: 2000px;
+    height: 2000px;
+    overflow: hide;
+    margin-left: 180px;
+}
+
+
+#toolbar-container{
+    background-color: blue;
+    position: fixed;
+    right: 150px;
+    z-index: 1;
+    height: 50px;
+	top:50px;
+}
+
+#navigator {
+    position: fixed;
+    right: 150px;
+    z-index: 1;
+    height: 250px;
+	top: 90px;
+}
+
+
