@@ -63,22 +63,22 @@ app.AppView = joint.mvc.View.extend({
 	},
 	
    initializeToolbar: function() {
-	var paper = new joint.dia.Paper({
-			width: 2000,
-			height: 2000,
-			model: this.graph
-		});
-    var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
+	//var paper = new joint.dia.Paper({
+	//		width: 2000,
+	//		height: 2000,
+	//		model: this.graph
+	//	});
+    //var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
 			//paper: paper,
-			paper: paper,
-			autoResizePaper: true,
-			cursor:'graph'
-		});
+	//		paper: paper,
+	//		autoResizePaper: true,
+		//	cursor:'graph'
+		//});
 		
 		 // this.$('#paper').append(paperScroller.el);
          //   paperScroller.render().center();
-			paperScroller.$el.appendTo('#paper');
-			paperScroller.render();
+		//	paperScroller.$el.appendTo('#paper');
+		//	paperScroller.render();
 			
 		var toolbar = new joint.ui.Toolbar({
 			// initialize tools with default settings
@@ -264,12 +264,12 @@ app.AppView = joint.mvc.View.extend({
     },
 
     initializePaper: function() {
-
+		var graph = this.graph = new joint.dia.Graph;
         this.paper = new joint.dia.Paper({
-            el: this.$('#paper'),
-            width: 1200,
-            height: 800,
+            width: 2000,
+            height: 2000,
             gridSize: 10,
+			model: graph,
             snapLinks: {
                 radius: 75
             },
@@ -289,7 +289,15 @@ app.AppView = joint.mvc.View.extend({
                 return magnet.getAttribute('magnet') !== 'passive';
             }
         });
-        this.graph = this.paper.model;
+      var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
+			//paper: paper,
+			paper: this.paper,
+			autoResizePaper: true,
+			cursor:'graph'
+		});
+			paperScroller.$el.appendTo('#paper');
+			paperScroller.render();
+		
     },
 
     // Show a message in the statusbar.
