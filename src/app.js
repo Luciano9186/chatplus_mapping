@@ -70,16 +70,29 @@ app.AppView = joint.mvc.View.extend({
 			
 		var toolbar = new joint.ui.Toolbar({
 			// initialize tools with default settings
-			tools: ['zoomIn','zoomToFit','zoomSlider','zoomOut'],
+
+			  tools: [
+        { type: 'zoomIn', name: 'zoom-in' },
+        { type: 'button', name: 'zoom-to-fit', text: 'Zoom-To-Fit' },
+        { type: 'zoomOut', name: 'zoom-out'},
+    ],
 			references: {
 				paperScroller: this.paperScroller
 			}
 		});
+		toolbar.on({
+                'zoom-to-fit:pointerclick': _.bind(this.zoomToFit, this),
+            });
+
 		toolbar.$el.appendTo('#toolbar-container');
 		toolbar.render().center;
 
 		//toolbar.render().$el.appendTo('#toolbar-container');
     },
+	
+	zoomToFit: function(){
+this.paperScroller.zoom(0.8, { max: 1 })
+	},
 
     initializeInlineTextEditor: function() {
 
@@ -281,7 +294,7 @@ app.AppView = joint.mvc.View.extend({
 			cursor:'graph'
 		});
 		 this.$('#paper').append(paperScroller.el);
-		paperScroller.render();
+		paperScroller.render().center();
 		this.paper.on('blank:pointerdown', function(evt, x, y){
 			this.paperScroller.startPanning(evt, x, y);
 		}, this);
