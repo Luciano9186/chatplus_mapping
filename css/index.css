@@ -14,13 +14,16 @@ html, body {
     background-color: #eaf0f3;
     border-right: 1px solid #e2e5e8;
     z-index: 1;
-}    
-
-#paper{
-    width: 2000px;
-    height: 2000px;
-    overflow: hide;
-    margin-left: 180px;
+} 
+   
+#paper {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    left: 240px;
+    right: -20px;
 }
 
 

@@ -21,7 +21,6 @@ app.AppView = joint.mvc.View.extend({
         this.initializeHalo();
         this.initializeInlineTextEditor();
 		this.initializeToolbar();
-		this.initializeNavigator();
         // this.initializeTooltips();
 
         this.loadExample();
@@ -50,18 +49,6 @@ app.AppView = joint.mvc.View.extend({
         });
     },
 	
-	initializeNavigator: function(){
-		var nav = new joint.ui.Navigator({
-			paperScroller: this.paperScroller,
-			width: 300,
-			height: 200,
-			padding: 10,
-			zoomOptions: { max: 2, min: 0.2 }
-		});
-		nav.$el.appendTo('#navigator');
-		nav.render();
-	},
-	
    initializeToolbar: function() {
 	//var paper = new joint.dia.Paper({
 	//		width: 2000,
@@ -82,7 +69,7 @@ app.AppView = joint.mvc.View.extend({
 			
 		var toolbar = new joint.ui.Toolbar({
 			// initialize tools with default settings
-			tools: ['zoomIn','zoomSlider','zoomOut'],
+			tools: ['zoomIn','zoomToFit','zoomSlider','zoomOut'],
 			references: {
 				paperScroller: this.paperScroller
 			}
@@ -207,6 +194,7 @@ app.AppView = joint.mvc.View.extend({
 					.removeHandle('fork')
 					.removeHandle('link')
 					.removeHandle('unlink')
+					.removeHandle('remove')
 					// .addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
 					.changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
 					.render();
@@ -264,12 +252,8 @@ app.AppView = joint.mvc.View.extend({
     },
 
     initializePaper: function() {
-		var graph = this.graph = new joint.dia.Graph;
         this.paper = new joint.dia.Paper({
-            width: 2000,
-            height: 2000,
             gridSize: 10,
-			model: graph,
             snapLinks: {
                 radius: 75
             },
@@ -289,15 +273,17 @@ app.AppView = joint.mvc.View.extend({
                 return magnet.getAttribute('magnet') !== 'passive';
             }
         });
+		this.graph = this.paper.model;
       var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
-			//paper: paper,
 			paper: this.paper,
 			autoResizePaper: true,
 			cursor:'graph'
 		});
-			paperScroller.$el.appendTo('#paper');
-			paperScroller.render();
-		
+		 this.$('#paper').append(paperScroller.el);
+		paperScroller.render();
+		this.paper.on('blank:pointerdown', function(evt, x, y){
+			this.paperScroller.startPanning(evt, x, y);
+		}, this);
     },
 
     // Show a message in the statusbar.
