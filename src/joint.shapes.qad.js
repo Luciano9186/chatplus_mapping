@@ -106,7 +106,7 @@ joint.dia.Element.define('qad.Question', {
         '.body': {
             refWidth: '100%',
             refHeight: '105%',
-			rx: 3,
+			rx: 7,
             stroke: 'none',
             fill: {
                 type: 'linearGradient',
@@ -150,8 +150,7 @@ joint.dia.Element.define('qad.Question', {
             refY: 15,
             fontSize: 15,
             textAnchor: 'middle'
-        },
-		
+        },		
 		    '.end-text': {
             fill: '#7A827D',
             refX: 130,
@@ -170,7 +169,7 @@ joint.dia.Element.define('qad.Question', {
 			refX: 20,
             stroke: '#d14c43',
             fill: '#FFFFFF',
-			width:'210',
+			width:'219',
 			height:'40'
 		},
 		'.header-rect': {
@@ -179,7 +178,7 @@ joint.dia.Element.define('qad.Question', {
 			//margin left and right
 			refX: 5,
 			refY: 5,
-            stroke: 'white',
+            //stroke: 'white',
             fill: '#FFFFFF',
 			width:'250',
 			height:'30',
@@ -188,7 +187,7 @@ joint.dia.Element.define('qad.Question', {
 			//margin left and right
 			refX:5,
 			refY: 30,
-            stroke: 'white',
+            //stroke: 'white',
             fill: '#FFFFFF',
 			width:'250',
 			height:'5',
@@ -196,12 +195,13 @@ joint.dia.Element.define('qad.Question', {
 		'.end-rect': {
 			//corner bottom left and right
 			//margin left 10
+            y:-4,
 			ry: 5,
 			refY: '100%',
-            stroke: '#F3D2D1',
+            //stroke: '#F3D2D1',
             fill: '#F3D2D1',
 			width:'260',
-			height:'20'
+			height:'25'
         }
     }
 }, {

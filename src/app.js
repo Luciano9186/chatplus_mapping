@@ -117,6 +117,8 @@ this.paperScroller.zoom(0.8, { max: 1 })
             var text;
             var cell = cellView.model;
             $("#nodeQa").modal('show');
+            // tttt = cellView.$('.question-text')[0];
+            // console.log(tttt);
      //        switch (cell.get('type')) {
 
      //            case 'qad.Question':
