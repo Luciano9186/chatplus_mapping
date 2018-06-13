@@ -195,13 +195,13 @@ joint.dia.Element.define('qad.Question', {
 		'.end-rect': {
 			//corner bottom left and right
 			//margin left 10
-            y:-4,
-			ry: 5,
+            y:-5,
+			ry: 7,
 			refY: '100%',
             //stroke: '#F3D2D1',
             fill: '#F3D2D1',
 			width:'260',
-			height:'25'
+			height:'26'
         }
     }
 }, {

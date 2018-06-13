@@ -117,45 +117,9 @@ this.paperScroller.zoom(0.8, { max: 1 })
             var vTarget = V(evt.target);
             var text;
             var cell = cellView.model;
-            $("#nodeQa").modal('show');
-            // tttt = cellView.$('.question-text')[0];
-            // console.log(tttt);
-     //        switch (cell.get('type')) {
-
-     //            case 'qad.Question':
-
-     //                text = joint.ui.TextEditor.getTextElement(evt.target);
-     //                if (!text) {
-     //                    break;
-     //                }
-     //                if (vTarget.hasClass('body') || V(text).hasClass('question-text')) {
-
-     //                    text = cellView.$('.question-text')[0];
-     //                    cellView.textEditPath = 'question';
-
-     //                } else if (V(text).hasClass('option-text')) {
-
-     //                    cellView.textEditPath = 'options/' + _.findIndex(cell.get('options'), { id: V(text.parentNode).attr('option-id') }) + '/text';
-     //                    cellView.optionId = V(text.parentNode).attr('option-id');
-
-     //                } else if (vTarget.hasClass('option-rect')) {
-
-     //                    text = V(vTarget.node.parentNode).find('.option-text');
-     //                    cellView.textEditPath = 'options/' + _.findIndex(cell.get('options'), { id: V(vTarget.node.parentNode).attr('option-id') }) + '/text';
-     //                }
-				
-					// else if (vTarget.hasClass('end-text')) {
-
-					// 	text = cellView.$('.end-text')[0];
-     //                    cellView.textEditPath = 'count'
-     //                }
-     //                break;
-
-     //            case 'qad.Answer':
-     //                text = joint.ui.TextEditor.getTextElement(evt.target);
-     //                cellView.textEditPath = 'answer';
-     //                break;
-     //        }
+            $("#nodeQa .qName").val(cell.get('question'));
+            var answers = cell.get('options');
+            $("#nodeQa").modal('show');            
 
             if (text) {
 
