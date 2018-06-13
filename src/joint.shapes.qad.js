@@ -177,20 +177,20 @@ joint.dia.Element.define('qad.Question', {
 			rx:5,
 			ry:5,
 			//margin left and right
-			refX: 10,
+			refX: 5,
 			refY: 5,
             stroke: 'white',
             fill: '#FFFFFF',
-			width:'240',
+			width:'250',
 			height:'30',
         },
 		'.header-rect-mask': {
 			//margin left and right
-			refX:10,
+			refX:5,
 			refY: 30,
             stroke: 'white',
             fill: '#FFFFFF',
-			width:'240',
+			width:'250',
 			height:'5',
         },
 		'.end-rect': {
