@@ -13,6 +13,7 @@ app.AppView = joint.mvc.View.extend({
         'click #toolbar .load-example': 'loadExample',
         'click #toolbar .clear': 'clear',
         'click #modal .add-question-modal': 'addQuestionModal',
+        'click #save': 'saveData',
     },
 
     init: function() {
@@ -317,6 +318,10 @@ this.paperScroller.zoom(0.8, { max: 1 })
         app.Factory.createQuestionOption(text, option).addTo(this.graph);
         this.status('Question added.');
         $('#listRule').modal('hide');
+    },
+
+    saveData: function () {
+        console.log(JSON.stringify(this.graph.toJSON()))
     },
 
     addAnswer: function() {
