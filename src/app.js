@@ -119,6 +119,11 @@ this.paperScroller.zoom(0.8, { max: 1 })
             var cell = cellView.model;
             $("#nodeQa .qName").val(cell.get('question'));
             var answers = cell.get('options');
+            var htmlText ='';
+            for ( var key in answers ) {
+                htmlText += '<div class="row"><div class="col-md-10 m-bottom-sm form-inline"><input style="width:100%" type="text" class="form-control form-check" value="'+ answers[key].text + '" required="required"></div><div class="col-md-1"><button class="delAnswer">x</button></div></div>';
+            }
+            $('.add-answer').before(htmlText);
             $("#nodeQa").modal('show');            
 
             if (text) {
