@@ -312,10 +312,11 @@ this.paperScroller.zoom(0.8, { max: 1 })
     },
 
     addQuestionModal: function() {
-        var text = $("#output-val").text();
-        app.Factory.createQuestion(text).addTo(this.graph);
+        var text = $("#question-val").text();
+        var option = $("#answers-val").text();
+        app.Factory.createQuestionOption(text, option).addTo(this.graph);
         this.status('Question added.');
-        $('#myModal').modal('hide');
+        $('#listRule').modal('hide');
     },
 
     addAnswer: function() {
@@ -382,12 +383,26 @@ this.paperScroller.zoom(0.8, { max: 1 })
 $(document).ready(function(){
     var htmlText ='';
     for ( var key in data ) {
-        htmlText += '<p id="question-' + key + '" class="add-question-modal">' + data[key].part_name + '</p>';
+        if(!data[key].content) {
+            htmlText += '<p id="question-' + key + '" class="add-question-modal">' + data[key].part_name + '</p>';
+        } else {
+            var blkstr = $.map(data[key].content.answers, function(value, index) {
+                var str = value.name;
+                return [str];
+            }).join(", ");
+            htmlText += '<p data-option="' + blkstr + '" id="question-' + key + '" class="add-question-modal">' + data[key].content.question + '</p>';
+        }
     }
     $('#modal').append(htmlText);
     $('#modal').on('click', '.add-question-modal', function(e){
         e.preventDefault();
         var txt = $(this).text();
-        $("#output-val").text(txt);
+        var option = $(this).data("option")
+        if (typeof option !== 'undefined'){
+            $("#answers-val").text(option);
+        } else {
+            $("#answers-val").text('');
+        }
+        $("#question-val").text(txt);
     });
 });
