@@ -116,43 +116,43 @@ this.paperScroller.zoom(0.8, { max: 1 })
             var vTarget = V(evt.target);
             var text;
             var cell = cellView.model;
+            $("#nodeQa").modal('show');
+     //        switch (cell.get('type')) {
 
-            switch (cell.get('type')) {
+     //            case 'qad.Question':
 
-                case 'qad.Question':
+     //                text = joint.ui.TextEditor.getTextElement(evt.target);
+     //                if (!text) {
+     //                    break;
+     //                }
+     //                if (vTarget.hasClass('body') || V(text).hasClass('question-text')) {
 
-                    text = joint.ui.TextEditor.getTextElement(evt.target);
-                    if (!text) {
-                        break;
-                    }
-                    if (vTarget.hasClass('body') || V(text).hasClass('question-text')) {
+     //                    text = cellView.$('.question-text')[0];
+     //                    cellView.textEditPath = 'question';
 
-                        text = cellView.$('.question-text')[0];
-                        cellView.textEditPath = 'question';
+     //                } else if (V(text).hasClass('option-text')) {
 
-                    } else if (V(text).hasClass('option-text')) {
+     //                    cellView.textEditPath = 'options/' + _.findIndex(cell.get('options'), { id: V(text.parentNode).attr('option-id') }) + '/text';
+     //                    cellView.optionId = V(text.parentNode).attr('option-id');
 
-                        cellView.textEditPath = 'options/' + _.findIndex(cell.get('options'), { id: V(text.parentNode).attr('option-id') }) + '/text';
-                        cellView.optionId = V(text.parentNode).attr('option-id');
+     //                } else if (vTarget.hasClass('option-rect')) {
 
-                    } else if (vTarget.hasClass('option-rect')) {
-
-                        text = V(vTarget.node.parentNode).find('.option-text');
-                        cellView.textEditPath = 'options/' + _.findIndex(cell.get('options'), { id: V(vTarget.node.parentNode).attr('option-id') }) + '/text';
-                    }
+     //                    text = V(vTarget.node.parentNode).find('.option-text');
+     //                    cellView.textEditPath = 'options/' + _.findIndex(cell.get('options'), { id: V(vTarget.node.parentNode).attr('option-id') }) + '/text';
+     //                }
 				
-					else if (vTarget.hasClass('end-text')) {
+					// else if (vTarget.hasClass('end-text')) {
 
-						text = cellView.$('.end-text')[0];
-                        cellView.textEditPath = 'count'
-                    }
-                    break;
+					// 	text = cellView.$('.end-text')[0];
+     //                    cellView.textEditPath = 'count'
+     //                }
+     //                break;
 
-                case 'qad.Answer':
-                    text = joint.ui.TextEditor.getTextElement(evt.target);
-                    cellView.textEditPath = 'answer';
-                    break;
-            }
+     //            case 'qad.Answer':
+     //                text = joint.ui.TextEditor.getTextElement(evt.target);
+     //                cellView.textEditPath = 'answer';
+     //                break;
+     //        }
 
             if (text) {
 

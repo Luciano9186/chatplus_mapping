@@ -43,5 +43,9 @@ html, body {
     height: 250px;
 	top: 90px;
 }
+.listAnswer{}
+.listAnswer .row{
+    margin-bottom:10px;
+}
 
 

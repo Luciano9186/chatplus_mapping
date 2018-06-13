@@ -32,22 +32,17 @@
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#save"
                 style="width: 100%; margin-bottom: 10px">Save
         </button>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="width: 100%;">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#listRule" style="width: 100%;">
             Group
         </button>
     </div>
-
-
     <section id="app">
-	  <div id="toolbar-container"></div>
-      <div id="paper"></div>
+	    <div id="toolbar-container"></div>
+        <div id="paper"></div>
 	
-      <div id="preview" class="preview">
-      </div>
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
+        <div id="preview" class="preview"></div>        
+        <div id="listRule" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -68,6 +63,51 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="nodeQa" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Node content</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-2 text-right"><label>Question name</label></div>
+                                <div class="col-md-9">
+                                    <textarea rows="5" class="form-control form-check" required="">123</textarea>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row m-top-sm">
+                                <div class="col-md-2 text-right"><label>Answers</label></div>
+                                <div class="col-md-10">
+                                    <div class="listAnswer">
+                                        <div class="row">
+                                            <div class="col-md-10 m-bottom-sm form-inline">
+                                                <input style="width:100%" type="text" class="form-control form-check" value="" required="">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button class="delAnswer">x</button>
+                                            </div>
+                                        </div>
+                                        <div class="row add-answer">
+                                            <div class="col-md-11 m-bottom-sm form-inline">
+                                                <button class="btn btn-info btn-sm btnAddAnswer">Add Answer</button>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-info">Save</button>
                     </div>
                 </div>
             </div>
