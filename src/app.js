@@ -380,6 +380,11 @@ this.paperScroller.zoom(0.8, { max: 1 })
     }
 });
 $(document).ready(function(){
+    var htmlText ='';
+    for ( var key in data ) {
+        htmlText += '<p id="question-' + key + '" class="add-question-modal">' + data[key].part_name + '</p>';
+    }
+    $('#modal').append(htmlText);
     $('#modal').on('click', '.add-question-modal', function(e){
         e.preventDefault();
         var txt = $(this).text();
