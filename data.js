@@ -8,7 +8,9 @@ var data =[
       "content" : {
         "question" : "Picaso",
         "answers" : [
-          "123123", "456456", "789789"
+            {"name" : "123123"},
+            {"name" : "123124"},
+            {"name" : "123125"}
         ]
       }
     }

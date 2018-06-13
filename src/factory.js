@@ -16,6 +16,34 @@ app.Factory = {
         });
     },
 
+    createQuestionOption: function(text, option) {
+        if(!option) {
+            return new joint.shapes.qad.Question({
+                position: { x: 400 - 50, y: 30 },
+                size: { width: 100, height: 70 },
+                question: text,
+                inPorts: [{ id: 'in', label: 'In' }],
+                options: [
+                    { id: 'question', text: 'Input Question Here.', height: '50' },
+                ],
+                count: '1'
+            });
+        } else {
+            var optionArray = option.split(',');
+            optionArray = $.map( optionArray, function( n, i ) {
+                return {id : 'answer' + i, text : n.trim(), height: '50'}
+            });
+            return new joint.shapes.qad.Question({
+                position: { x: 400 - 50, y: 30 },
+                size: { width: 100, height: 70 },
+                question: text,
+                inPorts: [{ id: 'in', label: 'In' }],
+                options: optionArray,
+                count: '1'
+            });
+        }
+    },
+
     createAnswer: function(text) {
 
         return new joint.shapes.qad.Answer({
