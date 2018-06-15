@@ -51,11 +51,11 @@ joint.shapes.qad.AnswerView = joint.dia.ElementView.extend({
 });
 
 joint.dia.Element.define('qad.Question', {
-
     optionHeight: 40,
     questionHeight: 45,
     paddingBottom: 30,
     minWidth: 260,
+	isDrag: true,
     ports: {
         groups: {
             in: {

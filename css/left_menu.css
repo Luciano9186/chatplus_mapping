@@ -1,4 +1,4 @@
-.sidenav {
+.stencil-container {
     /*width: 220px;
     position: fixed;
     z-index: 1;
@@ -9,6 +9,7 @@
     padding: 10px;*/
     position: fixed;
     left: 0px;
+    left: 0px;
     top: 0px;
     bottom: 0;
     width: 240px;
@@ -18,7 +19,7 @@
     padding:20px;
 }
 
-.sidenav a {
+.stencil-container a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 25px;
@@ -26,7 +27,7 @@
     display: block;
 }
 
-.sidenav a:hover {
+.stencil-container a:hover {
     color: #064579;
 }
 
@@ -37,6 +38,6 @@
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .stencil-container {padding-top: 15px;}
+    .stencil-container a {font-size: 18px;}
 }

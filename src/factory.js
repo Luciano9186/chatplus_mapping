@@ -1,7 +1,6 @@
 var app = app || {};
 
 app.Factory = {
-
     createQuestion: function(text) {
 
         return new joint.shapes.qad.Question({
@@ -70,6 +69,25 @@ app.Factory = {
                 }
             }
         });
+    },
+	
+	//Create item in left menu
+	 createItemLeftMenu: function(x, y, title) {
+        return new joint.shapes.basic.Rect({
+				position: { x: x, y: y},
+				size: { width: 150, height: 40 },
+				attrs: { 
+					text: { text:title,   fill: '#f6f6f6',},
+					rect: {
+							  rx: 2,
+							  ry: 2,
+							  fill: 'transparent',
+							  stroke: '#31d0c6',
+							  strokeWidth: 2,
+							  strokeDasharray: '0'
+						  },
+					}
+				});
     },
 
     // Example:

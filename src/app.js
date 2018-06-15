@@ -1,8 +1,8 @@
 var app = app || {};
 var qad = window.qad || {};
-
+var BTN_CREATE_QUESTION = 'Save';
+var BTN_CREATE_ANSWER = 'Group';
 app.AppView = joint.mvc.View.extend({
-
     el: '#app',
 
     events: {
@@ -12,7 +12,7 @@ app.AppView = joint.mvc.View.extend({
         'click #toolbar .code-snippet': 'showCodeSnippet',
         'click #toolbar .load-example': 'loadExample',
         'click #toolbar .clear': 'clear',
-        'click #modal .add-question-modal': 'addQuestionModal',
+        'click #modal .add-question-modal': 'updateQuestionModal',
         'click #save': 'saveData',
     },
 
@@ -23,6 +23,7 @@ app.AppView = joint.mvc.View.extend({
         this.initializeHalo();
         this.initializeInlineTextEditor();
 		this.initializeToolbar();
+		this.initializeStencil();
         // this.initializeTooltips();
 
         this.loadExample();
@@ -188,6 +189,49 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
         }, this);
     },
+	
+	initializeStencil: function(){
+		var stencil = new joint.ui.Stencil({
+					graph: this.graph,
+					paper: this.paper,
+					//When drag, a clone of rec instance will be created, 
+					//it make the id we set for item changing, so we need implement this event 
+					//to get correct item. If not implement function, id auto generate.
+					//dragStartClone: function(cell){
+					//	return cell;
+					//},
+					dragEndClone: function(cell) {
+						var itemView;
+						switch(cell.attributes.attrs.text.text) {
+							case BTN_CREATE_QUESTION:
+								itemView = new joint.shapes.qad.Question({
+									question: 'Question',
+									inPorts: [{ id: 'in', label: 'In' }],
+									options: [
+										{ id: 'question', text: 'Input Question Here.', height: '50' },
+									],
+									count: '1'
+								});
+								break;
+							case BTN_CREATE_ANSWER:
+								//TO DO SOMETHING
+									itemView = cell
+								break;
+							default:
+								itemView = cell
+						}
+						return itemView;
+					}
+				});
+			stencil.render().$el.appendTo('.stencil-container');
+			stencil.load([
+				app.Factory.createItemLeftMenu(35, 20, BTN_CREATE_QUESTION),
+				app.Factory.createItemLeftMenu(35, 70, BTN_CREATE_ANSWER),
+				app.Factory.createItemLeftMenu(35, 120, 'DONE')
+			]);
+	},
+	
+	
 
     initializeSelection: function() {
 
@@ -197,8 +241,15 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
         selection.on('add reset', function() {
             var cell = this.selection.first();
+			var isDrag = cell.attributes.isDrag;
             if (cell) {
-                this.status('Selection: ' + cell.get('type'));
+				if(isDrag){
+					this.selectionCell = cell;
+					$('#listRule').modal('show');
+				} else {
+					this.status('Selection: ' + cell.get('type'));
+				}
+                
             } else {
                 this.status('Selection emptied.');
             }
@@ -239,6 +290,8 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
     initializePaper: function() {
         this.paper = new joint.dia.Paper({
+			width:1600,
+			height: 1000,
             gridSize: 10,
             snapLinks: {
                 radius: 75
@@ -283,11 +336,12 @@ this.paperScroller.zoom(0.8, { max: 1 })
         this.status('Question added.');
     },
 
-    addQuestionModal: function() {
+    updateQuestionModal: function() {
         var text = $("#question-val").text();
         var option = $("#answers-val").text();
-        app.Factory.createQuestionOption(text, option).addTo(this.graph);
-        this.status('Question added.');
+		this.selectionCell.attributes.question = text;
+		this.selectionCell.attributes.option = option;
+		this.selectionCell.attributes.isDrag = false;
         $('#listRule').modal('hide');
     },
 
@@ -320,7 +374,7 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
     loadExample: function() {
 
-        this.graph.fromJSON({"cells":[{"type":"qad.Question","size":{"width":201.8984375,"height":125},"position":{"x":360,"y":80},"angle":0,"count":"1","question":"質問を入力してください。?","options":[{"id":"yes","text":"回答を入力してくだい。"}],"id":"d849d917-8a43-4d51-9e99-291799c144db","z":1,"attrs":{".options":{"refY":45},".question-text":{"text":"質問を入力してください。?"},".option-yes":{"transform":"translate(0, 0)","dynamic":true},".option-yes .option-rect":{"height":30,"dynamic":true},".option-yes .option-port .port-body":{"port":"yes","dynamic":true},".option-yes .option-text":{"text":"回答を入力してくだい。","dynamic":true},".option-no":{"transform":"translate(0, 30)","dynamic":true},".option-no .option-rect":{"height":30,"dynamic":true},".option-no .option-port .port-body":{"port":"no","dynamic":true},".option-no .option-text":{"text":"No","dynamic":true},".inPorts>.port-in>.port-label":{"text":"In"},".inPorts>.port-in>.port-body":{"port":{"id":"in","type":"in","label":"In"}},".inPorts>.port-in":{"ref":".body","ref-x":0.5}}},{"type":"qad.Answer","size":{"width":223.796875,"height":66.8},"inPorts":[{"id":"in","label":"In"}],"outPorts":[{"id":"yes","label":"回答を入力してくだい。"}],"position":{"x":50,"y":100},"angle":0,"answer":"システム.","id":"4073e883-1cc6-46a5-b22d-688ca1934324","z":2,"attrs":{"text":{"text":"Don't mess about with it."}}},{"type":"link","source":{"id":"4073e883-1cc6-46a5-b22d-688ca1934324","selector":"g:nth-child(1) g:nth-child(3) g:nth-child(1) g:nth-child(4) circle:nth-child(1)      ","port":"yes"},"target":{"id":"d849d917-8a43-4d51-9e99-291799c144db"},"router":{"name":"manhattan"},"connector":{"name":"rounded"},"id":"9d87214a-7b08-47ce-9aec-8e49ed7ae929","embeds":"","z":3,"attrs":{".marker-target":{"d":"M 10 0 L 0 5 L 10 10 z","fill":"#BDBDBD","stroke":"#BDBDBD"},".connection":{"stroke":"#BDBDBD","strokeWidth":2}}}]});
+        this.graph.fromJSON({"cells":[{"type":"qad.Question", "isDrag": false ,"size":{"width":201.8984375,"height":125},"position":{"x":360,"y":80},"angle":0,"count":"1","question":"質問を入力してください。?","options":[{"id":"yes","text":"回答を入力してくだい。"}],"id":"d849d917-8a43-4d51-9e99-291799c144db","z":1,"attrs":{".options":{"refY":45},".question-text":{"text":"質問を入力してください。?"},".option-yes":{"transform":"translate(0, 0)","dynamic":true},".option-yes .option-rect":{"height":30,"dynamic":true},".option-yes .option-port .port-body":{"port":"yes","dynamic":true},".option-yes .option-text":{"text":"回答を入力してくだい。","dynamic":true},".option-no":{"transform":"translate(0, 30)","dynamic":true},".option-no .option-rect":{"height":30,"dynamic":true},".option-no .option-port .port-body":{"port":"no","dynamic":true},".option-no .option-text":{"text":"No","dynamic":true},".inPorts>.port-in>.port-label":{"text":"In"},".inPorts>.port-in>.port-body":{"port":{"id":"in","type":"in","label":"In"}},".inPorts>.port-in":{"ref":".body","ref-x":0.5}}},{"type":"qad.Answer","size":{"width":223.796875,"height":66.8},"inPorts":[{"id":"in","label":"In"}],"outPorts":[{"id":"yes","label":"回答を入力してくだい。"}],"position":{"x":50,"y":100},"angle":0,"answer":"システム.","id":"4073e883-1cc6-46a5-b22d-688ca1934324","z":2,"attrs":{"text":{"text":"Don't mess about with it."}}},{"type":"link","source":{"id":"4073e883-1cc6-46a5-b22d-688ca1934324","selector":"g:nth-child(1) g:nth-child(3) g:nth-child(1) g:nth-child(4) circle:nth-child(1)      ","port":"yes"},"target":{"id":"d849d917-8a43-4d51-9e99-291799c144db"},"router":{"name":"manhattan"},"connector":{"name":"rounded"},"id":"9d87214a-7b08-47ce-9aec-8e49ed7ae929","embeds":"","z":3,"attrs":{".marker-target":{"d":"M 10 0 L 0 5 L 10 10 z","fill":"#BDBDBD","stroke":"#BDBDBD"},".connection":{"stroke":"#BDBDBD","strokeWidth":2}}}]});
     },
 
     clear: function() {
