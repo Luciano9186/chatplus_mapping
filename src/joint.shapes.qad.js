@@ -296,7 +296,6 @@ joint.dia.Element.define('qad.Question', {
     },
 
     removeOption: function(id) {
-
         var options = JSON.parse(JSON.stringify(this.get('options')));
         this.removePort(id);
         this.set('options', _.without(options, _.findWhere(options, { id: id })));
@@ -366,7 +365,10 @@ joint.shapes.qad.QuestionView = joint.dia.ElementView.extend({
     },
 
     onRemoveOption: function(evt) {
-
+		//disable remove option for question just create by drag
+		if(this.model.isDrag) {
+			return;
+		}
         this.model.removeOption(V(evt.target.parentNode).attr('option-id'));
     }
 });

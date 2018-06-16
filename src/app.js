@@ -93,7 +93,7 @@ app.AppView = joint.mvc.View.extend({
     },
 	
 	zoomToFit: function(){
-this.paperScroller.zoom(0.8, { max: 1 })
+		this.paperScroller.zoom(0.8, { max: 1 })
 	},
 
     initializeInlineTextEditor: function() {
@@ -241,10 +241,9 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
         selection.on('add reset', function() {
             var cell = this.selection.first();
-			var isDrag = cell.attributes.isDrag;
             if (cell) {
+				var isDrag = cell.attributes.isDrag;
 				if(isDrag){
-					this.selectionCell = cell;
 					$('#listRule').modal('show');
 				} else {
 					this.status('Selection: ' + cell.get('type'));
@@ -257,6 +256,7 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
         paper.on({
             'element:pointerup': function(elementView) {
+				this.selectionCell = elementView;
                 this.selection.reset([elementView.model]);
             },
             'blank:pointerdown': function() {
@@ -290,8 +290,8 @@ this.paperScroller.zoom(0.8, { max: 1 })
 
     initializePaper: function() {
         this.paper = new joint.dia.Paper({
-			width:1600,
-			height: 1000,
+			width:1000,
+			height: 800,
             gridSize: 10,
             snapLinks: {
                 radius: 75
@@ -339,9 +339,9 @@ this.paperScroller.zoom(0.8, { max: 1 })
     updateQuestionModal: function() {
         var text = $("#question-val").text();
         var option = $("#answers-val").text();
-		this.selectionCell.attributes.question = text;
-		this.selectionCell.attributes.option = option;
-		this.selectionCell.attributes.isDrag = false;
+		this.selectionCell.model.set('isDrag', false);
+		this.selectionCell.model.set('question', text);
+		this.selectionCell.model.set('option', option);
         $('#listRule').modal('hide');
     },
 
