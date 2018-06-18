@@ -289,7 +289,6 @@ joint.dia.Element.define('qad.Question', {
     },
 
     addOption: function(option) {
-
         var options = JSON.parse(JSON.stringify(this.get('options')));
         options.push(option);
         this.set('options', options);

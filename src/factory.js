@@ -89,6 +89,26 @@ app.Factory = {
 					}
 				});
     },
+	
+	//Create item in left menu with id
+	 createItemLeftMenuWithItemId: function(x, y, id, title) {
+        return new joint.shapes.basic.Rect({
+				id: id,
+				position: { x: x, y: y},
+				size: { width: 150, height: 40 },
+				attrs: { 
+					text: { text:title,   fill: '#f6f6f6',},
+					rect: {
+							  rx: 2,
+							  ry: 2,
+							  fill: 'transparent',
+							  stroke: '#31d0c6',
+							  strokeWidth: 2,
+							  strokeDasharray: '0'
+						  },
+					}
+				});
+    },
 
     // Example:
     /*

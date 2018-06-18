@@ -170,7 +170,7 @@ app.AppView = joint.mvc.View.extend({
     initializeHalo: function() {
 		
         this.paper.on('element:pointerup', function(elementView, evt) {
-		if(elementView.model.get('type') === 'qad.Question'){
+		if(elementView.model.get('type') === 'qad.Question' && !elementView.model.get('isDrag')){
 				var halo = new joint.ui.Halo({
 					cellView: elementView,
 					boxContent: false
@@ -206,7 +206,6 @@ app.AppView = joint.mvc.View.extend({
 							case BTN_CREATE_QUESTION:
 								itemView = new joint.shapes.qad.Question({
 									question: 'Question',
-									inPorts: [{ id: 'in', label: 'In' }],
 									options: [
 										{ id: 'question', text: 'Input Question Here.', height: '50' },
 									],
@@ -221,12 +220,32 @@ app.AppView = joint.mvc.View.extend({
 								itemView = cell
 						}
 						return itemView;
+					},
+					/**
+					dragStartClone: function(cell){
+						var currentGraph = stencil.getGraph();
+						var currentPaper = stencil.getPaper();
+						var view = currentGraph.getCell(BTN_CREATE_ANSWER).findView(currentPaper);
+						switch(cell.attributes.attrs.text.text) {
+							case BTN_CREATE_ANSWER:
+								//TO DO SOMETHING
+								 view.on('element:pointerup', function(elementView, evt) {
+									 console.log('aaaa');
+												}, this);
+									return cell.clone();
+								break;
+							default:
+								break;
+						}
+						return cell.clone();
 					}
+					**/
 				});
+
 			stencil.render().$el.appendTo('.stencil-container');
 			stencil.load([
 				app.Factory.createItemLeftMenu(35, 20, BTN_CREATE_QUESTION),
-				app.Factory.createItemLeftMenu(35, 70, BTN_CREATE_ANSWER),
+				app.Factory.createItemLeftMenuWithItemId(35, 70, BTN_CREATE_ANSWER, BTN_CREATE_ANSWER),
 				app.Factory.createItemLeftMenu(35, 120, 'DONE')
 			]);
 	},
@@ -290,8 +309,8 @@ app.AppView = joint.mvc.View.extend({
 
     initializePaper: function() {
         this.paper = new joint.dia.Paper({
-			width:1000,
-			height: 800,
+			width: 1200,
+			height: 1000,
             gridSize: 10,
             snapLinks: {
                 radius: 75
@@ -304,8 +323,20 @@ app.AppView = joint.mvc.View.extend({
                 if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
                 // Prevent linking from output ports to input ports within one element.
                 if (cellViewS === cellViewT) return false;
+				//validate link from question to answer
+				if(cellViewT.model.get('type') === 'qad.Question' && cellViewT.model.get('type') === 'qad.Answer') return false;
+
+				if(cellViewS.model.get('type') === 'qad.Question' && cellViewT.model.get('isDrag') === true) {
+					//TODO SOMETHING	
+					return false;
+				}
+				
                 // Prevent linking to input ports.
-                return (magnetT && magnetT.getAttribute('port-group') === 'in') || (cellViewS.model.get('type') === 'qad.Question' && cellViewT.model.get('type') === 'qad.Answer');
+                if(magnetT && magnetT.getAttribute('port-group') === 'in'){
+					console.log(linkv)
+					return true;
+				} 
+				return false;
             },
             validateMagnet: function(cellView, magnet) {
                 // Note that this is the default behaviour. Just showing it here for reference.
@@ -338,10 +369,20 @@ app.AppView = joint.mvc.View.extend({
 
     updateQuestionModal: function() {
         var text = $("#question-val").text();
-        var option = $("#answers-val").text();
+        var optionResults = $("#answers-val").text().split(',');
+		var options = JSON.parse(JSON.stringify(optionResults));
 		this.selectionCell.model.set('isDrag', false);
 		this.selectionCell.model.set('question', text);
-		this.selectionCell.model.set('option', option);
+		if(optionResults.length != 0) {
+			this.selectionCell.model.removeOption(this.selectionCell.model.get('options')[0].id);
+			_.each(options, function(optionElement, index) {
+			 this.selectionCell.model.addOption({
+            id: _.uniqueId('option-'),
+            text: optionElement
+        });
+        }, this);
+		this.selectionCell.model.set('option', options);
+		} 
         $('#listRule').modal('hide');
     },
 
