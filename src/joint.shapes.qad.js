@@ -1,5 +1,25 @@
 joint.dia.Element.define('qad.Answer', {
+			    ports: {
+        groups: {
+            out: {
+                position: 'right',
+                attrs: {
+                    circle: {
+                        magnet: true,
+                        stroke: '#90A4AE',
+						fill: 'white',
+                        r: 10
+                    }
+                }
+            }
+        },
+		   items: [{
+            group: 'out'
+        }],
+		markup: '<rect width="400" height="400" x="-8" strokegit ="red" fill="red"/>'
+    },
     attrs: {
+
         rect: {
             fill: '#4b4a67',
             stroke: 'none',

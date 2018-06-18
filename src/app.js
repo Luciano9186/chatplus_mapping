@@ -26,7 +26,7 @@ app.AppView = joint.mvc.View.extend({
 		this.initializeStencil();
         // this.initializeTooltips();
 
-        //this.loadExample();
+        this.loadExample();
     },
 
     initializeTooltips: function() {
