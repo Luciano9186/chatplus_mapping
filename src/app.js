@@ -26,7 +26,7 @@ app.AppView = joint.mvc.View.extend({
 		this.initializeStencil();
         // this.initializeTooltips();
 
-        this.loadExample();
+        //this.loadExample();
     },
 
     initializeTooltips: function() {
@@ -109,7 +109,7 @@ app.AppView = joint.mvc.View.extend({
                 this.textEditor = cellViewUnderEdit = undefined;
             }
         }, this);
-
+	/*
         this.paper.on('cell:pointerdblclick', function(cellView, evt) {
 
             // Clean up the old text editor if there was one.
@@ -156,7 +156,7 @@ app.AppView = joint.mvc.View.extend({
                 cellViewUnderEdit.setInteractivity(false);
             }
         }, this);
-
+	*/
         $(document.body).on('click', _.bind(function(evt) {
 
             var text = joint.ui.TextEditor.getTextElement(evt.target);
