@@ -376,10 +376,12 @@ app.AppView = joint.mvc.View.extend({
 		if(optionResults.length != 0) {
 			this.selectionCell.model.removeOption(this.selectionCell.model.get('options')[0].id);
 			_.each(options, function(optionElement, index) {
-			 this.selectionCell.model.addOption({
-            id: _.uniqueId('option-'),
-            text: optionElement
-        });
+			    if(optionElement) {
+                    this.selectionCell.model.addOption({
+                        id: _.uniqueId('option-'),
+                        text: optionElement
+                    });
+                }
         }, this);
 		this.selectionCell.model.set('option', options);
 		} 
