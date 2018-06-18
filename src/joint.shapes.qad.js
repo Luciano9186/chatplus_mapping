@@ -313,14 +313,27 @@ joint.dia.Element.define('qad.Question', {
 });
 
 joint.shapes.qad.QuestionView = joint.dia.ElementView.extend({
-
+	pointerdown: function () {
+        this._click = true;
+        joint.dia.ElementView.prototype.pointerdown.apply(this, arguments);
+    },
+    pointermove: function () {
+        this._click = false;
+        joint.dia.ElementView.prototype.pointermove.apply(this, arguments);
+    },
+    pointerup: function (evt, x, y) {
+        if (this._click) {
+            this.notify('cell:click', evt, x, y);
+        } else {
+            joint.dia.ElementView.prototype.pointerup.apply(this, arguments);
+        }
+    },
     events: {
         'click .btn-add-option': 'onAddOption',
         'click .btn-remove-option': 'onRemoveOption'
     },
 
     initialize: function() {
-
         joint.dia.ElementView.prototype.initialize.apply(this, arguments);
         this.listenTo(this.model, 'change:options', this.renderOptions, this);
     },

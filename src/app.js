@@ -274,10 +274,14 @@ app.AppView = joint.mvc.View.extend({
         }, this);
 
         paper.on({
-            'element:pointerup': function(elementView) {
+			'cell:click': function(elementView){
+				console.log('click')
 				this.selectionCell = elementView;
                 this.selection.reset([elementView.model]);
-            },
+			},
+			'cell:pointerup': function(elementView){
+				console.log('pointerup')
+			},
             'blank:pointerdown': function() {
                 this.selection.reset([]);
             }
@@ -333,7 +337,6 @@ app.AppView = joint.mvc.View.extend({
 				
                 // Prevent linking to input ports.
                 if(magnetT && magnetT.getAttribute('port-group') === 'in'){
-					console.log(linkv)
 					return true;
 				} 
 				return false;
@@ -341,7 +344,7 @@ app.AppView = joint.mvc.View.extend({
             validateMagnet: function(cellView, magnet) {
                 // Note that this is the default behaviour. Just showing it here for reference.
                 return magnet.getAttribute('magnet') !== 'passive';
-            }
+            },
         });
 		this.graph = this.paper.model;
       var paperScroller = this.paperScroller = new joint.ui.PaperScroller({
