@@ -1,22 +1,13 @@
 .stencil-container {
-    /*width: 220px;
     position: fixed;
-    z-index: 1;
-    top: 30px;
-    left: 10px;
-    background: #eaf0f3;
-    overflow-x: hidden;
-    padding: 10px;*/
-    position: fixed;
-    left: 0px;
     left: 0px;
     top: 0px;
     bottom: 0;
     width: 240px;
-    background-color: #eaf0f3;
     border-right: 1px solid #e2e5e8;
     z-index: 1;
     padding:20px;
+    background:#383b61;
 }
 
 .stencil-container a {
@@ -40,4 +31,36 @@
 @media screen and (max-height: 450px) {
     .stencil-container {padding-top: 15px;}
     .stencil-container a {font-size: 18px;}
+}
+.svg-stencil-container{
+    position: fixed;
+    left: 0px;
+    top: 65px;
+    bottom: 0;
+    width: 240px;
+    background-color: #eaf0f3;
+    border-right: 1px solid #e2e5e8;
+    z-index: 1;
+    padding:20px;
+}
+.stencil-container>#save{    
+    width: 151px;
+    height: 41px;
+    background: #383b61;
+    outline: none;
+    color:#31d0c6;
+    border:2px solid #31d0c6;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+
+    font-size: 14;
+    white-space: pre;
+    fill: rgb(246, 246, 246);
+    text-anchor: middle;
+    font-family: Arial, helvetica, sans-serif;
+    transform: matrix(1, 0, 0, 1, 15, 0);
+}
+.joint-stencil>.content{
+    overflow: visible
 }

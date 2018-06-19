@@ -1,7 +1,7 @@
 var app = app || {};
 var qad = window.qad || {};
-var BTN_CREATE_QUESTION = 'Save';
-var BTN_CREATE_ANSWER = 'Group';
+var BTN_CREATE_QUESTION = 'チャットボット';
+var BTN_CREATE_ANSWER = 'チャットボット＋';
 app.AppView = joint.mvc.View.extend({
     el: '#app',
 
@@ -205,7 +205,7 @@ app.AppView = joint.mvc.View.extend({
 						switch(cell.attributes.attrs.text.text) {
 							case BTN_CREATE_QUESTION:
 								itemView = new joint.shapes.qad.Question({
-									question: 'Question',
+									question: 'ルールを選択してください。',
 									//count: '1'
 								});
 								break;
@@ -239,11 +239,10 @@ app.AppView = joint.mvc.View.extend({
 					**/
 				});
 
-			stencil.render().$el.appendTo('.stencil-container');
+			stencil.render().$el.appendTo('.svg-stencil-container');
 			stencil.load([
-				app.Factory.createItemLeftMenu(35, 20, BTN_CREATE_QUESTION),
-				app.Factory.createItemLeftMenuWithItemId(35, 70, BTN_CREATE_ANSWER, BTN_CREATE_ANSWER),
-				app.Factory.createItemLeftMenu(35, 120, 'DONE')
+				app.Factory.createItemLeftMenu(35, 5, BTN_CREATE_QUESTION),
+                app.Factory.createItemLeftMenuWithItemId(35, 55, BTN_CREATE_ANSWER, BTN_CREATE_ANSWER)
 			]);
 	},
 	
@@ -276,7 +275,7 @@ app.AppView = joint.mvc.View.extend({
                 this.selection.reset([elementView.model]);
 			},
 			'cell:pointerup': function(elementView){
-				console.log('pointerup')
+				//console.log('pointerup')
 			},
             'blank:pointerdown': function() {
                 this.selection.reset([]);
@@ -318,7 +317,7 @@ app.AppView = joint.mvc.View.extend({
     initializePaper: function() {
         this.paper = new joint.dia.Paper({
 			width: 1200,
-			height: 1000,
+			height: 800,
             gridSize: 10,
             snapLinks: {
                 radius: 75
