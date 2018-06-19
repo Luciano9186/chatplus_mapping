@@ -383,9 +383,10 @@ app.AppView = joint.mvc.View.extend({
 		this.selectionCell.model.set('question', text);
 		var x = this.selectionCell.model.get('position').x;
 		var y = this.selectionCell.model.get('position').y;
+		var id = $("#question-id").text();
 		if(optionResults.length != 0) {	
 			this.selectionCell.model.remove();
-			 var newQa = app.Factory.createQuestionOption(text, optionResults, x, y, false)
+			 var newQa = app.Factory.createQuestionOption(id, text, optionResults, x, y, false)
 			 //remove default out port
 			 newQa.attributes.ports.items = _.without(newQa.attributes.ports.items, newQa.attributes.ports.items[1])
 			 newQa.set('ports', newQa.get('ports'))
@@ -406,7 +407,13 @@ app.AppView = joint.mvc.View.extend({
         }, this);
 		this.selectionCell.model.set('option', options);
 		*/
-		} 
+		} else {
+
+			 //remove default out port
+			 this.selectionCell.model.attributes.ports.items = _.without(this.selectionCell.model.attributes.ports.items, this.selectionCell.model.attributes.ports.items[1])
+			 this.selectionCell.model.set('ports', this.selectionCell.model.get('ports'))
+			 this.selectionCell.model._portSettingsData.ports = _.without(this.selectionCell.model._portSettingsData.ports, this.selectionCell.model._portSettingsData.ports[1])
+		}
         $('#listRule').modal('hide');
     },
 
@@ -479,18 +486,19 @@ $(document).ready(function(){
     var htmlText ='';
     for ( var key in data ) {
         if(!data[key].content) {
-            htmlText += '<p id="question-' + key + '" class="add-question-modal">' + data[key].part_name + '</p>';
+            htmlText += '<p id="' + data[key].id + '" class="add-question-modal">' + data[key].part_name + '</p>';
         } else {
             var blkstr = $.map(data[key].content.answers, function(value, index) {
                 var str = value.name;
                 return [str];
             }).join(", ");
-            htmlText += '<p data-option="' + blkstr + '" id="question-' + key + '" class="add-question-modal">' + data[key].content.question + '</p>';
+            htmlText += '<p data-option="' + blkstr + '" id="' + data[key].id + '" class="add-question-modal">' + data[key].content.question + '</p>';
         }
     }
     $('#modal').append(htmlText);
     $('#modal').on('click', '.add-question-modal', function(e){
         e.preventDefault();
+		var id = $(this)[0].id;
         var txt = $(this).text();
         var option = $(this).data("option")
         if (typeof option !== 'undefined'){
@@ -499,5 +507,6 @@ $(document).ready(function(){
             $("#answers-val").text('');
         }
         $("#question-val").text(txt);
+		$("#question-id").text(id);
     });
 });
