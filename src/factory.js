@@ -15,7 +15,7 @@ app.Factory = {
         });
     },
 
-    createQuestionOption: function(text, option) {
+    createQuestionOption: function(text, option, x, y, isDrag) {
         if(!option) {
             return new joint.shapes.qad.Question({
                 position: { x: 400 - 50, y: 30 },
@@ -33,12 +33,13 @@ app.Factory = {
                 return {id : 'answer' + i, text : n.trim(), height: '50'}
             });
             return new joint.shapes.qad.Question({
-                position: { x: 400 - 50, y: 30 },
+                position: { x: x, y: y },
                 size: { width: 100, height: 70 },
                 question: text,
                 inPorts: [{ id: 'in', label: 'In' }],
                 options: optionArray,
-                count: '1'
+				isDrag: isDrag,
+               // count: '1'
             });
         }
     },

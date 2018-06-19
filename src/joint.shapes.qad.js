@@ -1,11 +1,11 @@
 joint.dia.Element.define('qad.Answer', {
-			    ports: {
+		ports: {
         groups: {
             out: {
                 position: 'right',
                 attrs: {
                     circle: {
-                        magnet: true,
+                        magnet: false,
                         stroke: '#90A4AE',
 						fill: 'white',
                         r: 10
@@ -16,7 +16,6 @@ joint.dia.Element.define('qad.Answer', {
 		   items: [{
             group: 'out'
         }],
-		markup: '<rect width="400" height="400" x="-8" strokegit ="red" fill="red"/>'
     },
     attrs: {
 
@@ -114,9 +113,8 @@ joint.dia.Element.define('qad.Question', {
         },
         items: [{
             group: 'in',
-            attrs: {
-                text: { text: '' }
-            }
+        },{
+            group: 'out',
         }]
     },
     attrs: {
@@ -227,7 +225,8 @@ joint.dia.Element.define('qad.Question', {
 }, {
 
     markup: '<rect class="body"/><g><rect class="end-rect"/><text class="end-text"/><rect class="header-rect"  z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect><text class="question-text">Hello</text></g><g class="options"></g>',
-    optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
+    optionMarkup: '<g class="option"><rect class="option-rect"/><text class="option-text"/></g>',
+	//optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {
         joint.dia.Element.prototype.initialize.apply(this, arguments);
