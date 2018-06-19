@@ -206,10 +206,7 @@ app.AppView = joint.mvc.View.extend({
 							case BTN_CREATE_QUESTION:
 								itemView = new joint.shapes.qad.Question({
 									question: 'Question',
-									options: [
-										{ id: 'question', text: 'Input Question Here.', height: '50' },
-									],
-									count: '1'
+									//count: '1'
 								});
 								break;
 							case BTN_CREATE_ANSWER:
@@ -283,7 +280,15 @@ app.AppView = joint.mvc.View.extend({
 			},
             'blank:pointerdown': function() {
                 this.selection.reset([]);
-            }
+            }, 
+			'link:connect': function(linkView, evt, elementView, magnet, arrowhead) {
+				var portId = magnet && magnet.getAttribute('port');
+				if (portId) console.log('new port:', portId);
+			},
+			'link:disconnect': function(linkView, evt, elementView, magnet, arrowhead) {
+				var portId = magnet && magnet.getAttribute('port');
+				if (portId) console.log('new port:', portId);
+			},
         }, this);
 
         graph.on('remove', function() {
@@ -371,12 +376,21 @@ app.AppView = joint.mvc.View.extend({
 
     updateQuestionModal: function() {
         var text = $("#question-val").text();
-        var optionResults = $("#answers-val").text().split(',');
-		var options = JSON.parse(JSON.stringify(optionResults));
+        var optionResults = $("#answers-val").text();
+		//var optionResults = $("#answers-val").text().split(',');
+		//var options = JSON.parse(JSON.stringify(optionResults));
 		this.selectionCell.model.set('isDrag', false);
 		this.selectionCell.model.set('question', text);
-		if(optionResults.length != 0) {
-			this.selectionCell.model.removeOption(this.selectionCell.model.get('options')[0].id);
+		var x = this.selectionCell.model.get('position').x;
+		var y = this.selectionCell.model.get('position').y;
+		if(optionResults.length != 0) {	
+			this.selectionCell.model.remove();
+			 app.Factory.createQuestionOption(text, optionResults, x, y, false).addTo(this.graph);
+			/*
+			if(this.selectionCell.model.get('options')){
+				this.selectionCell.model.removeOption(this.selectionCell.model.get('options')[0].id);
+			}
+			
 			_.each(options, function(optionElement, index) {
 			    if(optionElement) {
                     this.selectionCell.model.addOption({
@@ -386,6 +400,7 @@ app.AppView = joint.mvc.View.extend({
                 }
         }, this);
 		this.selectionCell.model.set('option', options);
+		*/
 		} 
         $('#listRule').modal('hide');
     },
