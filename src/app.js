@@ -385,7 +385,12 @@ app.AppView = joint.mvc.View.extend({
 		var y = this.selectionCell.model.get('position').y;
 		if(optionResults.length != 0) {	
 			this.selectionCell.model.remove();
-			 app.Factory.createQuestionOption(text, optionResults, x, y, false).addTo(this.graph);
+			 var newQa = app.Factory.createQuestionOption(text, optionResults, x, y, false)
+			 //remove default out port
+			 newQa.attributes.ports.items = _.without(newQa.attributes.ports.items, newQa.attributes.ports.items[1])
+			 newQa.set('ports', newQa.get('ports'))
+			 newQa._portSettingsData.ports = _.without(newQa._portSettingsData.ports, newQa._portSettingsData.ports[1])
+			 newQa.addTo(this.graph);
 			/*
 			if(this.selectionCell.model.get('options')){
 				this.selectionCell.model.removeOption(this.selectionCell.model.get('options')[0].id);
