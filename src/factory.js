@@ -15,17 +15,18 @@ app.Factory = {
         });
     },
 
-    createQuestionOption: function(id,text, option, x, y, isDrag) {
+    createQuestionOption: function(id, viewed, text, option, x, y, isDrag) {
         if(!option) {
             return new joint.shapes.qad.Question({
-                position: { x: 400 - 50, y: 30 },
+                position: { x: x, y: y },
                 size: { width: 100, height: 70 },
                 question: text,
                 inPorts: [{ id: 'in', label: 'In' }],
                 options: [
-                    { id: 'question', text: 'Input Question Here.', height: '50' },
                 ],
-                count: '1'
+                isDrag: isDrag,
+                count: viewed,
+                id: id+"_"+Math.floor(Date.now() / 1000),
             });
         } else {
             var optionArray = option.split(',');
@@ -33,14 +34,14 @@ app.Factory = {
                 return {id : 'answer' + i, text : n.trim(), height: '50'}
             });
             return new joint.shapes.qad.Question({
-				id: id,
                 position: { x: x, y: y },
                 size: { width: 100, height: 70 },
                 question: text,
                 inPorts: [{ id: 'in', label: 'In' }],
                 options: optionArray,
-				isDrag: isDrag,
-               // count: '1'
+                isDrag: isDrag,
+                count: viewed,
+                id: id+"_"+Math.floor(Date.now() / 1000),
             });
         }
     },
@@ -78,14 +79,14 @@ app.Factory = {
         return new joint.shapes.basic.Rect({
 				position: { x: x, y: y},
 				size: { width: 150, height: 40 },
-				attrs: { 
-					text: { text:title,   fill: '#f6f6f6',},
+				attrs: {
+					text: { text:title,   fill: '#f6f6f6', id: 'conghc'},
 					rect: {
 							  rx: 2,
 							  ry: 2,
-							  fill: 'transparent',
-							  stroke: '#31d0c6',
-							  strokeWidth: 2,
+							  fill: '#337ab7',
+							  stroke: '#236298',
+							  strokeWidth: 1,
 							  strokeDasharray: '0'
 						  },
 					}
@@ -103,9 +104,9 @@ app.Factory = {
 					rect: {
 							  rx: 2,
 							  ry: 2,
-							  fill: 'transparent',
-							  stroke: '#31d0c6',
-							  strokeWidth: 2,
+							  fill: '#337ab7',
+							  stroke: '#236298',
+							  strokeWidth: 1,
 							  strokeDasharray: '0'
 						  },
 					}

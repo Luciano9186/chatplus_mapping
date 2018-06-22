@@ -3,11 +3,11 @@
     left: 0px;
     top: 0px;
     bottom: 0;
-    width: 240px;
-    border-right: 1px solid #e2e5e8;
+    width: 220px;
+    border-right: 1px solid #ccc;
     z-index: 1;
     padding:20px;
-    background:#383b61;
+    background:#dfdfdf;
 }
 
 .stencil-container a {
@@ -35,32 +35,53 @@
 .svg-stencil-container{
     position: fixed;
     left: 0px;
-    top: 65px;
+    top: 0px;
     bottom: 0;
-    width: 240px;
-    background-color: #eaf0f3;
-    border-right: 1px solid #e2e5e8;
+    width: 220px;
+    background:#dfdfdf;
+    /*border-right: 1px solid #e2e5e8;*/
     z-index: 1;
     padding:20px;
+    margin-top:20px;
 }
-.stencil-container>#save{    
+.stencil-container>#save,
+.stencil-container>#pngdl{    
     width: 151px;
-    height: 41px;
-    background: #383b61;
-    outline: none;
-    color:#31d0c6;
-    border:2px solid #31d0c6;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-
-    font-size: 14;
+    height: 38px;
     white-space: pre;
     fill: rgb(246, 246, 246);
     text-anchor: middle;
     font-family: Arial, helvetica, sans-serif;
     transform: matrix(1, 0, 0, 1, 15, 0);
+    background-color: #027c96;
+    color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    padding:10px;
+    text-align: center;
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 3px 0px 0px rgba(10, 63, 74, 0.88);
+    box-shadow: 0px 3px 0px 0px rgba(10, 63, 74, 0.88);
+    cursor: pointer;
+    z-index:10001;
+
+    position: fixed;
+    left: 20px;
+    top: 135px;
+    bottom: 0;
 }
+.stencil-container>#pngdl{    
+    top: 185px;
+}
+
 .joint-stencil>.content{
     overflow: visible
+}
+
+.joint-stencil.joint-theme-modern {
+    background:#dfdfdf !important;
+    border-right: 1px solid #ccc;
 }

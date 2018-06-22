@@ -12,3 +12,15 @@ $(".btnAddAnswer").on('click', function(){
 $(document).on('click', ".delAnswer", function () {
 	$(this).parent().parent().remove();
 });
+
+$(document).on('keyup', ".search-field",function(){
+	var searchText = $(this).val();
+
+	$(this).closest("#modal").find("#questions p").each(function(i){
+		if( $(this).text().indexOf( searchText ) !== -1 ) {
+			$(this).show();
+		}else {
+			$(this).hide();
+		}
+	});
+});

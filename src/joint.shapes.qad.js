@@ -1,11 +1,11 @@
 joint.dia.Element.define('qad.Answer', {
-		ports: {
+			    ports: {
         groups: {
             out: {
                 position: 'right',
                 attrs: {
                     circle: {
-                        magnet: false,
+                        magnet: true,
                         stroke: '#90A4AE',
 						fill: 'white',
                         r: 10
@@ -16,6 +16,7 @@ joint.dia.Element.define('qad.Answer', {
 		   items: [{
             group: 'out'
         }],
+		markup: ''
     },
     attrs: {
 
@@ -36,7 +37,28 @@ joint.dia.Element.define('qad.Answer', {
             fill: '#f6f6f6',
             fontFamily: 'Arial, helvetica, sans-serif'
         }
-    }
+    },
+    ports: {
+        groups: {
+            out: {
+                position: 'right',
+                attrs: {
+                    circle: {
+                        magnet: true,
+                        stroke: '#90A4AE',
+                        fill: 'white',
+                        r: 10
+                    }
+                }
+            }
+        },
+        items: [{
+            group: 'out',
+            attrs: {
+                text: { text: '' }
+            }
+        }]
+    },
 }, {
     markup: '<rect/><text/>',
 
@@ -116,6 +138,7 @@ joint.dia.Element.define('qad.Question', {
         },{
             group: 'out',
         }]
+
     },
     attrs: {
         '.': {
@@ -123,14 +146,15 @@ joint.dia.Element.define('qad.Question', {
         },
         '.body': {
             refWidth: '100%',
-            refHeight: '105%',
+            refHeight: '100%',
 			rx: 7,
-            stroke: 'none',
+            stroke: '#03c1ea',
+	    strokeWidth: 2,
             fill: {
                 type: 'linearGradient',
                 stops: [
-                    { offset: '0%', color: '#F3D2D1' },
-                    { offset: '100%', color: '#F3D2D1' }
+                    { offset: '0%', color: '#fff' },
+                    { offset: '100%', color: '#fff' }
                 ],
                 // Top-to-bottom gradient.
                 attrs: { x1: '0%', y1: '0%', x2: '0%', y2: '100%' }
@@ -158,7 +182,7 @@ joint.dia.Element.define('qad.Question', {
         },
         '.option-text': {
             fontSize: 11,
-            fill: '#4b4a67',
+            fill: '#666',
             refX: 30,
             yAlignment: 'middle'
         },
@@ -166,28 +190,28 @@ joint.dia.Element.define('qad.Question', {
             fill: 'black',
             refX: 130,
             refY: 15,
-            fontSize: 15,
+            fontSize: 12,
             textAnchor: 'middle'
         },		
 		    '.end-text': {
             fill: '#7A827D',
             refX: 130,
-			refY: '100%',
-            fontSize: 15,
+	    refY: -20,
+            fontSize: 16,
             textAnchor: 'end',
         },
 
         // Options styling.
         '.option-rect': {
 			//corner top left and right
-            rx: 3,
+            //rx: 3,
 			//corner bottom left and right
-            ry: 3,
+            //ry: 3,
 			//margin left 10
-			refX: 20,
-            stroke: '#d14c43',
+			//refX: 20,
+            stroke: '#03c1ea',
             fill: '#FFFFFF',
-			width:'219',
+			width:'260',
 			height:'40'
 		},
 		'.header-rect': {
@@ -209,7 +233,7 @@ joint.dia.Element.define('qad.Question', {
             fill: '#FFFFFF',
 			width:'250',
 			height:'5',
-        },
+        }/*,
 		'.end-rect': {
 			//corner bottom left and right
 			//margin left 10
@@ -217,23 +241,24 @@ joint.dia.Element.define('qad.Question', {
 			ry: 7,
 			refY: '100%',
             //stroke: '#F3D2D1',
-            fill: '#F3D2D1',
+            fill: '#fff',
 			width:'260',
 			height:'26'
-        }
+        }*/
     }
 }, {
 
     markup: '<rect class="body"/><g><rect class="end-rect"/><text class="end-text"/><rect class="header-rect"  z="1" transform="matrix(1,0,0,1,2,1)"></rect><rect class="header-rect-mask" z="10"></rect><text class="question-text">Hello</text></g><g class="options"></g>',
     optionMarkup: '<g class="option"><rect class="option-rect"/><text class="option-text"/></g>',
-	//optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
+   // optionMarkup: '<g class="option"><rect class="option-rect"/><path class="btn-remove-option" d="M0,0 15,0 15,5 0,5z"/><text class="option-text"/></g>',
 
     initialize: function() {
         joint.dia.Element.prototype.initialize.apply(this, arguments);
         this.on('change:options', this.onChangeOptions, this);
         this.on('change:question', function() {
             this.attr('.question-text/text', this.get('question') || '');
-			this.attr('.end-text/text', this.get('count') || '');
+		   	var count = (this.get('count')>=0)? "pv:"+this.get('count') : "";
+			this.attr('.end-text/text', count);
             this.autoresize();
         }, this);
 
@@ -246,7 +271,8 @@ joint.dia.Element.define('qad.Question', {
 
         this.attr('.options/refY', this.get('questionHeight'), { silent: true });
         this.attr('.question-text/text', this.get('question'), { silent: true });
-		   this.attr('.end-text/text', this.get('count'), { silent: true });
+		   var count = (this.get('count')>=0)? "pv:"+this.get('count') : "";
+		   this.attr('.end-text/text', count, { silent: true });
 
         this.onChangeOptions();
     },

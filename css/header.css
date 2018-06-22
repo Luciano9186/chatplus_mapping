@@ -20,3 +20,13 @@
     margin: 0;
     padding: 0;
 }
+#modal p {
+    border: 1px solid powderblue;
+    padding: 5px;
+    font-size: 12px;
+    cursor:pointer;
+}
+#modal p:hover {
+    background:#03c1ea;
+}
+}

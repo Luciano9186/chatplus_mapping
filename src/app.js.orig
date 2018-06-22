@@ -15,7 +15,6 @@ app.AppView = joint.mvc.View.extend({
         'click #modal .add-question-modal': 'updateQuestionModal',
         'click .modal-footer #delete_qa': 'deleteQuestionDefault',
         'click #save': 'saveData',
-        'click #pngdl': 'exportPng',
     },
 
     init: function() {
@@ -185,8 +184,7 @@ app.AppView = joint.mvc.View.extend({
                     .removeHandle('unlink')
                     // .removeHandle('remove')
                     // .addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
-                    //.changeHandle('clone', { position: 'ne', icon: '/admin/assets/lib/chat-bot-map/image/icon_copy.png' })
-                    .changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
+                    .changeHandle('clone', { position: 'ne', icon: '/admin/assets/lib/chat-bot-map/image/icon_copy.png' })
                     .render();
         }
 
@@ -208,28 +206,18 @@ app.AppView = joint.mvc.View.extend({
                 switch(cell.attributes.attrs.text.text) {
                     case BTN_CREATE_QUESTION:
                         itemView = new joint.shapes.qad.Question({
-                            question: 'クリックしてチャットボットを選択',
-                            typeQA: '1'
+                            question: 'ルールを選択してください。',
                         });
                         break;
                     case BTN_CREATE_ANSWER:
                         //TO DO SOMETHING
                         itemView = new joint.shapes.qad.Question({
-                            question: 'クリックしてチャットボットを選択',
-                            typeQA: '2'
+                            question: 'ルールを選択してください。',
                         });
                         break;
                     default:
                         itemView = cell
                 }
-                var temps = _.without(itemView.attributes.ports.items, itemView.attributes.ports.items[0]);
-                //remove port out data
-                itemView.attributes.ports.items = _.without(temps, temps[0]);
-                itemView.set('ports', itemView.get('ports'))
-                //remove port in  to display
-                var tempSettingPort = _.without(itemView._portSettingsData.ports, itemView._portSettingsData.ports[0]);
-                //remove port out  to display
-                itemView._portSettingsData.ports = _.without(tempSettingPort, tempSettingPort[0])
                 return itemView;
             },
             /**
@@ -273,46 +261,6 @@ app.AppView = joint.mvc.View.extend({
             if (cell) {
                 var isDrag = cell.attributes.isDrag;
                 if(isDrag){
-                    typeQA = cell.attributes.typeQA
-                    htmlText = ''
-                    if (typeQA == 1) {
-                        var map_json = $('#chatbot_rule_normal').text()
-                        var data = $.parseJSON(map_json)
-                        for ( var key in data ) {
-                            if(!data[key].content) {
-                                htmlText += '<p data-id="' + data[key].part_id + '" data-viewed="' + data[key].viewed + '" id="question-' + key + '" class="add-question-modal">' + data[key].part_name + '</p>';
-                            } else {
-                                var blkstr = $.map(data[key].content.answers, function(value, index) {
-                                    var str = value.name;
-                                    return [str];
-                                }).join(", ");
-                                htmlText += '<p data-id="' + data[key].part_id + '" data-viewed="' + data[key].viewed + '" data-option="' + blkstr + '" id="question-' + key + '" class="add-question-modal">' + data[key].content.question + '</p>';
-                            }
-                        }
-                        $('#modal #questions').html('');
-                        $('#search-container .search-field').val('');
-                        $('#modal #questions').append(htmlText);
-                    } else if (typeQA == 2) {
-                        var map_json = $('#chatbot_rule_plus').text()
-                        var data = $.parseJSON(map_json)
-
-                        for ( var key in data ) {
-                            if(!data[key].content) {
-                                htmlText += '<p data-id="' + data[key].part_id + '" data-viewed="' + data[key].viewed + '" id="question-' + key + '" class="add-question-modal">' + data[key].part_name + '</p>';
-                            } else {
-                                var blkstr = $.map(data[key].content.answers, function(value, index) {
-                                    var str = value.name;
-                                    return [str];
-                                }).join(", ");
-                                htmlText += '<p data-id="' + data[key].part_id + '" data-viewed="' + data[key].viewed + '" data-option="' + blkstr + '" id="question-' + key + '" class="add-question-modal">' + data[key].content.question + '</p>';
-                            }
-                        }
-                        $('#modal #questions').html('');
-                        $('#search-container .search-field').val('');
-                        $('#modal #questions').append(htmlText);
-                    }
-
-
                     $('#listRule').modal('show');
                 } else {
                     this.status('Selection: ' + cell.get('type'));
@@ -430,16 +378,21 @@ app.AppView = joint.mvc.View.extend({
         var x = this.selectionCell.model.get('position').x;
         var y = this.selectionCell.model.get('position').y;
         // if(optionResults.length != 0) {
-        this.selectionCell.model.remove();
-        var newQa = app.Factory.createQuestionOption(id, viewed, text, optionResults, x, y, false)
-        //remove default out port
-        if(optionResults.length != 0) {
+            this.selectionCell.model.remove();
+            var newQa = app.Factory.createQuestionOption(id, viewed, text, optionResults, x, y, false)
+            //remove default out port
             newQa.attributes.ports.items = _.without(newQa.attributes.ports.items, newQa.attributes.ports.items[1])
             newQa.set('ports', newQa.get('ports'))
             newQa._portSettingsData.ports = _.without(newQa._portSettingsData.ports, newQa._portSettingsData.ports[1])
-        }
-
-        newQa.addTo(this.graph);
+            newQa.addTo(this.graph);
+        // } else {
+        //     //remove default out port
+        //     this.selectionCell.model.attributes.ports.items = _.without(this.selectionCell.model.attributes.ports.items, this.selectionCell.model.attributes.ports.items[1])
+        //     this.selectionCell.model.set('ports', this.selectionCell.model.get('ports'))
+        //     this.selectionCell.model.set('isDrag', false)
+        //     this.selectionCell.model.set('count', viewed)
+        //     this.selectionCell.model._portSettingsData.ports = _.without(this.selectionCell.model._portSettingsData.ports, this.selectionCell.model._portSettingsData.ports[1])
+        // }
         $('#listRule').modal('hide');
     },
 
@@ -450,7 +403,6 @@ app.AppView = joint.mvc.View.extend({
     saveData: function () {
         var mapid = $('#chatbot_map_id').text()
         console.log(mapid)
-	showLoader();
         $.ajax ({
             url:        '/admin/cp/chat-bot-save',
             type:       'POST',
@@ -459,38 +411,21 @@ app.AppView = joint.mvc.View.extend({
                 map_id : mapid
             },
             success: function(data, status) {
-		hideLoader();
                 console.log(data)
                 if(data == 'Not relation') {
                     alert('保存できません。マップデータ正しくありません。');
                 } else {
+<<<<<<< HEAD
+                    alert('保存できました。');
+=======
                     alert('マップ保存できました。');
+>>>>>>> 3276df09d71ec2e6735bd0f4ca8c891d7f14400b
                 }
             },
             error : function(xhr, textStatus, errorThrown) {
-		hideLoader();
-                alert('Ajax request failed.');
+                alert('データが正しくありません。ご確認してください。');
             }
         });
-    },
-
-    exportPng: function () {
-	var svg = document.querySelector("svg");
-	var svgData = new XMLSerializer().serializeToString(svg);
-	var canvas = document.createElement("canvas");
-	canvas.width = svg.width.baseVal.value;
-	canvas.height = svg.height.baseVal.value;
-
-	var ctx = canvas.getContext("2d");
-	var image = new Image;
-	image.onload = function(){
-	    ctx.drawImage( image, 0, 0 );
-	    var a = document.createElement("a");
-	    a.href = canvas.toDataURL("image/png");
-	    a.setAttribute("download", "chatbotmap.png");
-	    a.dispatchEvent(new CustomEvent("click"));
-	}
-	image.src = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(svgData))); 
     },
 
     addAnswer: function() {
@@ -555,7 +490,7 @@ app.AppView = joint.mvc.View.extend({
     }
 });
 $(document).ready(function(){
-    $.getJSON('http://tittle-app.tk:8088/api/map-data', function(data) {
+    $.getJSON('/api/chat/rules', function(data) {
         var htmlText ='';
         for ( var key in data ) {
             if(!data[key].content) {
@@ -568,7 +503,7 @@ $(document).ready(function(){
                 htmlText += '<p data-id="' + data[key].part_id + '" data-viewed="' + data[key].viewed + '" data-option="' + blkstr + '" id="question-' + key + '" class="add-question-modal">' + data[key].content.question + '</p>';
             }
         }
-        $('#modal #questions').append(htmlText);
+        $('#modal').append(htmlText);
         $('#modal').on('click', '.add-question-modal', function(e){
             e.preventDefault();
             var txt = $(this).text();
