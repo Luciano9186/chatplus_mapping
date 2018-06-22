@@ -41,7 +41,7 @@ app.AppView = joint.mvc.View.extend({
                 var cell = this.paper.findView(target).model;
 
                 var text = '- Double-click to edit text inline.';
-                if (cell.get('type') === 'qad.Question') {
+                if (cell.get('type') === 'qad.Normal') {
                     text += '<br/><br/>- Connect a port with another Question or an Answer.';
                 }
 
@@ -172,7 +172,7 @@ app.AppView = joint.mvc.View.extend({
     initializeHalo: function() {
         
         this.paper.on('cell:click', function(elementView, evt) {
-        if(elementView.model.get('type') === 'qad.Question' && !elementView.model.get('isDrag')){
+        if(elementView.model.get('type') === 'qad.Normal' && !elementView.model.get('isDrag')){
                 var halo = new joint.ui.Halo({
                     cellView: elementView,
                     boxContent: false
@@ -207,14 +207,14 @@ app.AppView = joint.mvc.View.extend({
                 var itemView;
                 switch(cell.attributes.attrs.text.text) {
                     case BTN_CREATE_QUESTION:
-                        itemView = new joint.shapes.qad.Question({
+                        itemView = new joint.shapes.qad.Normal({
                             question: 'クリックしてチャットボットを選択',
                             typeQA: '1'
                         });
                         break;
                     case BTN_CREATE_ANSWER:
                         //TO DO SOMETHING
-                        itemView = new joint.shapes.qad.Question({
+                        itemView = new joint.shapes.qad.Normal({
                             question: 'クリックしてチャットボットを選択',
                             typeQA: '2'
                         });
@@ -322,7 +322,6 @@ app.AppView = joint.mvc.View.extend({
                 this.status('Selection emptied.');
             }
         }, this);
-
         paper.on({
             'cell:click': function(elementView){
                 this.selectionCell = elementView;
@@ -333,11 +332,23 @@ app.AppView = joint.mvc.View.extend({
             },
             'blank:pointerdown': function() {
                 this.selection.reset([]);
-            }
+            },
+			'link:connect': function(linkView, evt, elementView, magnet, arrowhead) {
+				if(linkView.sourceView.model.get('type') === 'qad.Default') {
+					linkView.sourceMagnet.setAttribute('magnet', 'passive')
+				}
+				var portId = magnet && magnet.getAttribute('port');
+				if (portId) console.log('new port:', portId);
+			},
+			'link:disconnect': function(linkView, evt, elementView, magnet, arrowhead) {
+				var portId = magnet && magnet.getAttribute('port');
+				if (portId) console.log('new port:', portId);
+			},
         }, this);
 
-        graph.on('remove', function() {
+        graph.on('remove', function(cell, collection, opt) {
             this.selection.reset([]);
+			console.log(cell)
         }, this);
 
         new app.SelectionView({
@@ -372,14 +383,23 @@ app.AppView = joint.mvc.View.extend({
             multiLinks: false,
             defaultLink: app.Factory.createLink(),
             validateConnection: function(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
+				
+				
+				/*if(cellViewS.model.get('type') === 'qad.Default' && 
+				cellViewS.model.get('hasConnected') &&
+				magnetT && magnetT.getAttribute('port-group') === 'in') {
+					return false;
+				};
+				*/
+				
                 // Prevent linking from input ports.
                 if (magnetS && magnetS.getAttribute('port-group') === 'in') return false;
                 // Prevent linking from output ports to input ports within one element.
                 if (cellViewS === cellViewT) return false;
                 //validate link from question to answer
-                if(cellViewT.model.get('type') === 'qad.Question' && cellViewT.model.get('type') === 'qad.Answer') return false;
+                if(cellViewT.model.get('type') === 'qad.Normal' && cellViewT.model.get('type') === 'qad.Default') return false;
 
-                if(cellViewS.model.get('type') === 'qad.Question' && cellViewT.model.get('isDrag') === true) {
+                if(cellViewS.model.get('type') === 'qad.Normal' && cellViewT.model.get('isDrag') === true) {
                     //TODO SOMETHING    
                     return false;
                 }

@@ -40,7 +40,7 @@ app.AppView = joint.mvc.View.extend({
                 var cell = this.paper.findView(target).model;
 
                 var text = '- Double-click to edit text inline.';
-                if (cell.get('type') === 'qad.Question') {
+                if (cell.get('type') === 'qad.Normal') {
                     text += '<br/><br/>- Connect a port with another Question or an Answer.';
                 }
 
@@ -171,7 +171,7 @@ app.AppView = joint.mvc.View.extend({
     initializeHalo: function() {
         
         this.paper.on('cell:click', function(elementView, evt) {
-        if(elementView.model.get('type') === 'qad.Question' && !elementView.model.get('isDrag')){
+        if(elementView.model.get('type') === 'qad.Normal' && !elementView.model.get('isDrag')){
                 var halo = new joint.ui.Halo({
                     cellView: elementView,
                     boxContent: false
@@ -205,13 +205,13 @@ app.AppView = joint.mvc.View.extend({
                 var itemView;
                 switch(cell.attributes.attrs.text.text) {
                     case BTN_CREATE_QUESTION:
-                        itemView = new joint.shapes.qad.Question({
+                        itemView = new joint.shapes.qad.Normal({
                             question: 'ルールを選択してください。',
                         });
                         break;
                     case BTN_CREATE_ANSWER:
                         //TO DO SOMETHING
-                        itemView = new joint.shapes.qad.Question({
+                        itemView = new joint.shapes.qad.Normal({
                             question: 'ルールを選択してください。',
                         });
                         break;
@@ -325,9 +325,9 @@ app.AppView = joint.mvc.View.extend({
                 // Prevent linking from output ports to input ports within one element.
                 if (cellViewS === cellViewT) return false;
                 //validate link from question to answer
-                if(cellViewT.model.get('type') === 'qad.Question' && cellViewT.model.get('type') === 'qad.Answer') return false;
+                if(cellViewT.model.get('type') === 'qad.Normal' && cellViewT.model.get('type') === 'qad.Default') return false;
 
-                if(cellViewS.model.get('type') === 'qad.Question' && cellViewT.model.get('isDrag') === true) {
+                if(cellViewS.model.get('type') === 'qad.Normal' && cellViewT.model.get('isDrag') === true) {
                     //TODO SOMETHING    
                     return false;
                 }

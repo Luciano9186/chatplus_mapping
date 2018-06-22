@@ -1,5 +1,6 @@
-joint.dia.Element.define('qad.Answer', {
-			    ports: {
+joint.dia.Element.define('qad.Default', {
+	hasConnected: false,
+	ports: {
         groups: {
             out: {
                 position: 'right',
@@ -55,7 +56,8 @@ joint.dia.Element.define('qad.Answer', {
         items: [{
             group: 'out',
             attrs: {
-                text: { text: '' }
+                text: { text: '' },
+				magnet: 'passive'
             }
         }]
     },
@@ -73,7 +75,7 @@ joint.dia.Element.define('qad.Answer', {
     }
 });
 
-joint.shapes.qad.AnswerView = joint.dia.ElementView.extend({
+joint.shapes.qad.DefaultView = joint.dia.ElementView.extend({
 
     initialize: function() {
 
@@ -91,7 +93,7 @@ joint.shapes.qad.AnswerView = joint.dia.ElementView.extend({
     }
 });
 
-joint.dia.Element.define('qad.Question', {
+joint.dia.Element.define('qad.Normal', {
     optionHeight: 40,
     questionHeight: 45,
     paddingBottom: 30,
@@ -357,7 +359,7 @@ joint.dia.Element.define('qad.Question', {
     }
 });
 
-joint.shapes.qad.QuestionView = joint.dia.ElementView.extend({
+joint.shapes.qad.NormalView = joint.dia.ElementView.extend({
 	pointerdown: function () {
         this._click = true;
         joint.dia.ElementView.prototype.pointerdown.apply(this, arguments);

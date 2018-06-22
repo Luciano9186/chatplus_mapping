@@ -3,7 +3,7 @@ var app = app || {};
 app.Factory = {
     createQuestion: function(text) {
 
-        return new joint.shapes.qad.Question({
+        return new joint.shapes.qad.Normal({
             position: { x: 400 - 50, y: 30 },
             size: { width: 100, height: 70 },
             question: text,
@@ -17,7 +17,7 @@ app.Factory = {
 
     createQuestionOption: function(id, viewed, text, option, x, y, isDrag) {
         if(!option) {
-            return new joint.shapes.qad.Question({
+            return new joint.shapes.qad.Normal({
                 position: { x: x, y: y },
                 size: { width: 100, height: 70 },
                 question: text,
@@ -33,7 +33,7 @@ app.Factory = {
             optionArray = $.map( optionArray, function( n, i ) {
                 return {id : 'answer' + i, text : n.trim(), height: '50'}
             });
-            return new joint.shapes.qad.Question({
+            return new joint.shapes.qad.Normal({
                 position: { x: x, y: y },
                 size: { width: 100, height: 70 },
                 question: text,
@@ -48,7 +48,7 @@ app.Factory = {
 
     createAnswer: function(text) {
 
-        return new joint.shapes.qad.Answer({
+        return new joint.shapes.qad.Default({
             position: { x: 400 - 50, y: 30 },
             size: { width: 100, height: 70 },
             answer: text
@@ -112,22 +112,7 @@ app.Factory = {
 					}
 				});
     },
-
-    // Example:
-    /*
-      {
-         root: '1',
-         nodes: [
-            { id: '1', type: 'qad.Question', question: 'Are you sure?', options: [{ id: 'yes', text: 'Yes' }, { id: 'no', text: 'No' }] },
-            { id: '2', type: 'qad.Answer', answer: 'That was good.' },
-            { id: '3', type: 'qad.Answer', answer: 'That was bad.' }
-         ],
-         links: [
-            { type: 'qad.Link', source: { id: '1', port: 'yes' }, target: { id: '2' } },
-            { type: 'qad.Link', source: { id: '1', port: 'no' }, target: { id: '3' } }
-         ]
-      }
-    */
+	
     createDialogJSON: function(graph, rootCell) {
 
         var dialog = {
@@ -144,12 +129,12 @@ app.Factory = {
             };
 
             switch (cell.get('type')) {
-                case 'qad.Question':
+                case 'qad.Normal':
                     o.question = cell.get('question');
                     o.options = cell.get('options');
                     dialog.nodes.push(o);
                     break;
-                case 'qad.Answer':
+                case 'qad.Default':
                     o.answer = cell.get('answer');
                     dialog.nodes.push(o);
                     break;

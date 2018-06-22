@@ -33,7 +33,7 @@ qad.renderDialog = function(dialog, node) {
         case 'qad.Question':
             this.renderQuestion(node);
             break;
-        case 'qad.Answer':
+        case 'qad.Default':
             this.renderAnswer(node);
             break;
     }
