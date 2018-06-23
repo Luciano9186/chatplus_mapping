@@ -353,7 +353,7 @@ app.AppView = joint.mvc.View.extend({
 				if(linkView.sourceView.model.get('type') === 'qad.Default') {
 					linkView.sourceMagnet.setAttribute('magnet', 'passive')
 				}
-				var count = 100;
+				var count = this.getCount(elementView.model.get('id'));
 				elementView.model.set('count', count)
 				//need update question to apply count update
 				var question = elementView.model.get('question')
@@ -465,6 +465,14 @@ app.AppView = joint.mvc.View.extend({
         app.Factory.createQuestion('Question').addTo(this.graph);
         this.status('Question added.');
     },
+	
+	getCount: function(id){
+		console.log(id);
+		if(id){
+			return 69;
+		}
+		return 1;
+	},
 
     updateQuestionModal: function() {
         var id = $("#question-id").text();
