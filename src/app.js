@@ -192,7 +192,7 @@ app.AppView = joint.mvc.View.extend({
                     .changeHandle('clone', {position: 'ne', icon: 'image/icon_copy.png'})
                     .render();
 
-                halo.on('action:details:pointerup', function (evt) {
+                halo.on('action:icon-details:pointerup', function (evt) {
                     var id_string = elementView.model.get('id');
                     var id = id_string.split("_");
                     evt.stopPropagation();
