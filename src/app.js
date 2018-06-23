@@ -169,10 +169,10 @@ app.AppView = joint.mvc.View.extend({
         }, this));
     },
 
-    initializeHalo: function() {
-        
-        this.paper.on('cell:click', function(elementView, evt) {
-        if(elementView.model.get('type') === 'qad.Normal' && !elementView.model.get('isDrag')){
+    initializeHalo: function () {
+
+        this.paper.on('cell:click', function (elementView, evt) {
+            if (elementView.model.get('type') === 'qad.Normal' && !elementView.model.get('isDrag')) {
                 var halo = new joint.ui.Halo({
                     cellView: elementView,
                     boxContent: false
@@ -184,11 +184,21 @@ app.AppView = joint.mvc.View.extend({
                     .removeHandle('link')
                     .removeHandle('unlink')
                     // .removeHandle('remove')
-                    // .addHandle({ name: 'addnew', position: 'se', icon: 'image/icon_clone.png' })
-                    //.changeHandle('clone', { position: 'ne', icon: '/admin/assets/lib/chat-bot-map/image/icon_copy.png' })
-                    .changeHandle('clone', { position: 'ne', icon: 'image/icon_copy.png' })
+                    .addHandle({
+                        name: 'icon-details',
+                        position: 'ne',
+                        icon: 'image/icon_details.png'
+                    })
+                    .changeHandle('clone', {position: 'ne', icon: 'image/icon_copy.png'})
                     .render();
-        }
+
+                halo.on('action:details:pointerup', function (evt) {
+                    var id_string = elementView.model.get('id');
+                    var id = id_string.split("_");
+                    evt.stopPropagation();
+                    window.open('/admin/cp/chat-bot-add/' + id[0], '_blank');
+                });
+            }
 
         }, this);
     },
@@ -328,7 +338,7 @@ app.AppView = joint.mvc.View.extend({
                 this.selection.reset([elementView.model]);
             },
             'cell:pointerup': function(elementView){
-                console.log('pointerup')
+                //console.log('pointerup')
 				//Event to get link deleted
 				if(elementView.sourceView && 
 					elementView.sourceView.model.get('type') === 'qad.Default'
@@ -356,7 +366,7 @@ app.AppView = joint.mvc.View.extend({
 			        
             this.selection.reset([]);
 			if (cell.isLink() && this.linkViewDeleted) {
-				console.log(this.linkViewDeleted);
+				//console.log(this.linkViewDeleted);
 				this.linkViewDeleted.sourceMagnet.setAttribute('magnet', 'true')
 			}
         }, this);
@@ -479,8 +489,8 @@ app.AppView = joint.mvc.View.extend({
 
     saveData: function () {
         var mapid = $('#chatbot_map_id').text()
-        console.log(mapid)
-	showLoader();
+        //console.log(mapid);
+	    showLoader();
         $.ajax ({
             url:        '/admin/cp/chat-bot-save',
             type:       'POST',
@@ -490,7 +500,7 @@ app.AppView = joint.mvc.View.extend({
             },
             success: function(data, status) {
 		hideLoader();
-                console.log(data)
+                //console.log(data)
                 if(data == 'Not relation') {
                     alert('保存できません。マップデータ正しくありません。');
                 } else {
@@ -505,22 +515,20 @@ app.AppView = joint.mvc.View.extend({
     },
 
     exportPng: function () {
-	var svg = document.querySelector("svg");
-	var svgData = new XMLSerializer().serializeToString(svg);
-	var canvas = document.createElement("canvas");
-	canvas.width = svg.width.baseVal.value;
-	canvas.height = svg.height.baseVal.value;
 
-	var ctx = canvas.getContext("2d");
-	var image = new Image;
-	image.onload = function(){
-	    ctx.drawImage( image, 0, 0 );
-	    var a = document.createElement("a");
-	    a.href = canvas.toDataURL("image/png");
-	    a.setAttribute("download", "chatbotmap.png");
-	    a.dispatchEvent(new CustomEvent("click"));
-	}
-	image.src = "data:image/svg+xml;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(svgData))); 
+        var paper = this.paper;
+        var graph = this.graph;
+
+        if (graph.getElements().length > 0) {
+            var downloadArea = graph.getBBox().inflate(20);
+
+            paper.toPNG(function(svg) {
+                var fileName = 'Chat_Bot_Map.png';
+                joint.util.downloadDataUri(svg, fileName);
+            }.bind(this), {
+                area: downloadArea
+            });
+        }
     },
 
     addAnswer: function() {

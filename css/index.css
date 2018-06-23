@@ -85,3 +85,9 @@ html, body {
     -moz-opacity: 0.6;
     z-index: 10000;
 }
+.joint-halo.surrounding .handle.icon-details{
+    right:30px;
+}
+.joint-halo.surrounding .handle{
+    cursor: pointer;
+}
