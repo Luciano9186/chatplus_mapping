@@ -99,6 +99,7 @@ joint.dia.Element.define('qad.Normal', {
     paddingBottom: 30,
     minWidth: 260,
 	isDrag: true,
+	count: 0,
     ports: {
         groups: {
             in: {

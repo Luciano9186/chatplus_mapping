@@ -353,6 +353,13 @@ app.AppView = joint.mvc.View.extend({
 				if(linkView.sourceView.model.get('type') === 'qad.Default') {
 					linkView.sourceMagnet.setAttribute('magnet', 'passive')
 				}
+				var count = 100;
+				elementView.model.set('count', count)
+				//need update question to apply count update
+				var question = elementView.model.get('question')
+				elementView.model.set('question', '')
+				elementView.model.set('question', question)
+				//elementView.model.set('question', 'Minh cờ hó')
 				var portId = magnet && magnet.getAttribute('port');
 				if (portId) console.log('new port:', portId);
 			},
