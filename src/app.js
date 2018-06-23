@@ -328,7 +328,13 @@ app.AppView = joint.mvc.View.extend({
                 this.selection.reset([elementView.model]);
             },
             'cell:pointerup': function(elementView){
-                //console.log('pointerup')
+                console.log('pointerup')
+				//Event to get link deleted
+				if(elementView.sourceView && 
+					elementView.sourceView.model.get('type') === 'qad.Default'
+					&& elementView.model.isLink()){
+					this.linkViewDeleted = elementView;
+				}
             },
             'blank:pointerdown': function() {
                 this.selection.reset([]);
@@ -347,8 +353,12 @@ app.AppView = joint.mvc.View.extend({
         }, this);
 
         graph.on('remove', function(cell, collection, opt) {
+			        
             this.selection.reset([]);
-			console.log(cell)
+			if (cell.isLink() && this.linkViewDeleted) {
+				console.log(this.linkViewDeleted);
+				this.linkViewDeleted.sourceMagnet.setAttribute('magnet', 'true')
+			}
         }, this);
 
         new app.SelectionView({
