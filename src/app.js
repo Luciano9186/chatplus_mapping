@@ -479,14 +479,17 @@ app.AppView = joint.mvc.View.extend({
         var viewed = $("#viewed-val").text();
         var text = $("#question-val").text();
         var optionResults = $("#answers-val").text();
+		var type = 1;
+		
 
         this.selectionCell.model.set('isDrag', false);
         this.selectionCell.model.set('question', text);
         var x = this.selectionCell.model.get('position').x;
         var y = this.selectionCell.model.get('position').y;
+		var typeQa = this.selectionCell.model.get('typeQa');
         // if(optionResults.length != 0) {
         this.selectionCell.model.remove();
-        var newQa = app.Factory.createQuestionOption(id, viewed, text, optionResults, x, y, false)
+        var newQa = app.Factory.createQuestionOption(id, viewed, text, optionResults, x, y, false, typeQa)
         //remove default out port
         if(optionResults.length != 0) {
             newQa.attributes.ports.items = _.without(newQa.attributes.ports.items, newQa.attributes.ports.items[1])
