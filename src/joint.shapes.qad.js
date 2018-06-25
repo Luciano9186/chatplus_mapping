@@ -100,6 +100,7 @@ joint.dia.Element.define('qad.Normal', {
     minWidth: 260,
 	isDrag: true,
 	count: 0,
+	typeQa: 0,
     ports: {
         groups: {
             in: {
