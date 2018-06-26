@@ -193,10 +193,15 @@ app.AppView = joint.mvc.View.extend({
                     .render();
 
                 halo.on('action:icon-details:pointerup', function (evt) {
+                    var typeQA = elementView.model.get('typeQA');
                     var id_string = elementView.model.get('id');
                     var id = id_string.split("_");
                     evt.stopPropagation();
-                    window.open('/admin/cp/chat-bot-add/' + id[0], '_blank');
+                    if(typeQA == '1'){
+                        window.open('/admin/cp/chat-startup-add/' + id[0], '_blank');
+                    }else{
+                        window.open('/admin/cp/chat-bot-add/' + id[0], '_blank');
+                    }
                 });
             }
 
@@ -338,7 +343,7 @@ app.AppView = joint.mvc.View.extend({
                 this.selection.reset([elementView.model]);
             },
             'cell:pointerup': function(elementView){
-                //console.log('pointerup')
+                //console.log('pointerup')1
 				//Event to get link deleted
 				if(elementView.sourceView && 
 					elementView.sourceView.model.get('type') === 'qad.Default'
@@ -350,18 +355,32 @@ app.AppView = joint.mvc.View.extend({
                 this.selection.reset([]);
             },
 			'link:connect': function(linkView, evt, elementView, magnet, arrowhead) {
+                
 				if(linkView.sourceView.model.get('type') === 'qad.Default') {
-					linkView.sourceMagnet.setAttribute('magnet', 'passive')
-				}
-				var count = this.getCount(elementView.model.get('id'));
-				elementView.model.set('count', count)
-				//need update question to apply count update
-				var question = elementView.model.get('question')
-				elementView.model.set('question', '')
-				elementView.model.set('question', question)
-				//elementView.model.set('question', 'Minh cờ hó')
-				var portId = magnet && magnet.getAttribute('port');
-				if (portId) console.log('new port:', portId);
+                    linkView.sourceMagnet.setAttribute('magnet', 'passive')
+                    //linkView.sourceView.model.get('ports').groups.out.attrs.circle.magnet = 'passive'
+                }
+                var optionText = '';
+                if(linkView.sourceView.model.get('options')){
+                    for(var i = 0; i < linkView.sourceView.model.get('options').length; i++) {
+                        var option = linkView.sourceView.model.get('options')[i];
+                        if(linkView.options.model.get('source').port === option.id) {
+                            optionText = option.text;
+                            break;
+                        }
+                    }
+                }
+                
+                var count = this.getCount(elementView.model.get('id'), optionText);
+            
+                elementView.model.set('count', count)
+                //need update question to apply count update
+                var question = elementView.model.get('question')
+                elementView.model.set('question', '')
+                elementView.model.set('question', question)
+
+                var portId = magnet && magnet.getAttribute('port');
+                if (portId) console.log('new port:', portId);
 			},
 			'link:disconnect': function(linkView, evt, elementView, magnet, arrowhead) {
 				var portId = magnet && magnet.getAttribute('port');
@@ -375,6 +394,7 @@ app.AppView = joint.mvc.View.extend({
 			if (cell.isLink() && this.linkViewDeleted) {
 				//console.log(this.linkViewDeleted);
 				this.linkViewDeleted.sourceMagnet.setAttribute('magnet', 'true')
+            // linkViewDeleted.model.get('ports').groups.out.attrs.circle.magnet = 'true'
 			}
         }, this);
 
@@ -465,31 +485,44 @@ app.AppView = joint.mvc.View.extend({
         app.Factory.createQuestion('Question').addTo(this.graph);
         this.status('Question added.');
     },
-	
-	getCount: function(id){
-		console.log(id);
-		if(id){
-			return 69;
-		}
-		return 1;
-	},
+
+    getCount: function(id, optionText){
+        console.log(id + ' -- ' + optionText);
+        var count = 0;
+        if(id){
+            var id = id.split("_");
+            $.ajax ({
+                url:        'http://tittle-app.tk:8088/api/map-count',
+                type:       'POST',
+                data: {
+                    part_id: id['0'],
+                    answer_text : optionText
+                },
+                success: function(data) {
+                    count = data;
+                },
+                error : function(xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+            });
+        }
+        return count;
+    },
 
     updateQuestionModal: function() {
         var id = $("#question-id").text();
         var viewed = $("#viewed-val").text();
         var text = $("#question-val").text();
         var optionResults = $("#answers-val").text();
-		var type = 1;
-		
 
         this.selectionCell.model.set('isDrag', false);
         this.selectionCell.model.set('question', text);
         var x = this.selectionCell.model.get('position').x;
         var y = this.selectionCell.model.get('position').y;
-		var typeQa = this.selectionCell.model.get('typeQa');
+        var typeQA = this.selectionCell.model.get('typeQA');
         // if(optionResults.length != 0) {
         this.selectionCell.model.remove();
-        var newQa = app.Factory.createQuestionOption(id, viewed, text, optionResults, x, y, false, typeQa)
+        var newQa = app.Factory.createQuestionOption(id, viewed, text, optionResults, x, y, false, typeQA)
         //remove default out port
         if(optionResults.length != 0) {
             newQa.attributes.ports.items = _.without(newQa.attributes.ports.items, newQa.attributes.ports.items[1])
@@ -509,6 +542,7 @@ app.AppView = joint.mvc.View.extend({
         var mapid = $('#chatbot_map_id').text()
         //console.log(mapid);
 	    showLoader();
+        console.log(this.graph.toJSON());
         $.ajax ({
             url:        '/admin/cp/chat-bot-save',
             type:       'POST',
@@ -517,7 +551,7 @@ app.AppView = joint.mvc.View.extend({
                 map_id : mapid
             },
             success: function(data, status) {
-		hideLoader();
+		        hideLoader();
                 //console.log(data)
                 if(data == 'Not relation') {
                     alert('保存できません。マップデータ正しくありません。');

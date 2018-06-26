@@ -15,7 +15,7 @@ app.Factory = {
         });
     },
 
-    createQuestionOption: function(id, viewed, text, option, x, y, isDrag, typeQa) {
+    createQuestionOption: function(id, viewed, text, option, x, y, isDrag, typeQA) {
         if(!option) {
             return new joint.shapes.qad.Normal({
                 position: { x: x, y: y },
@@ -26,7 +26,7 @@ app.Factory = {
                 ],
                 isDrag: isDrag,
                 count: viewed,
-				type: typeQa,
+                typeQA: typeQA,
                 id: id+"_"+Math.floor(Date.now() / 1000),
             });
         } else {
@@ -42,7 +42,7 @@ app.Factory = {
                 options: optionArray,
                 isDrag: isDrag,
                 count: viewed,
-				type: typeQa,
+                typeQA: typeQA,
                 id: id+"_"+Math.floor(Date.now() / 1000),
             });
         }
