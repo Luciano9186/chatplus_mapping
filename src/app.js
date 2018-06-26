@@ -71,7 +71,7 @@ app.AppView = joint.mvc.View.extend({
          //   paperScroller.render().center();
         //  paperScroller.$el.appendTo('#paper');
         //  paperScroller.render();
-            
+        var commandManager = new joint.dia.CommandManager({ graph: this.graph });
         var toolbar = new joint.ui.Toolbar({
             // initialize tools with default settings
 
@@ -79,13 +79,20 @@ app.AppView = joint.mvc.View.extend({
         { type: 'zoomIn', name: 'zoom-in' },
         { type: 'button', name: 'zoom-to-fit', text: 'Zoom-To-Fit' },
         { type: 'zoomOut', name: 'zoom-out'},
+		{type: 'undo', name: 'undo'},
+		{type: 'redo', name: 'redo'},
+		{type: 'button', name: 'print', text: 'Print'},
+			{type: 'fullscreen', name: 'fullscreen'}
+		//{type: 'fullscreen', 'full-screen'}
     ],
             references: {
-                paperScroller: this.paperScroller
+                paperScroller: this.paperScroller,
+				commandManager: commandManager
             }
         });
         toolbar.on({
                 'zoom-to-fit:pointerclick': _.bind(this.zoomToFit, this),
+				'print:pointerclick': _.bind(this.paper.print, this.paper),
             });
 
         toolbar.$el.appendTo('#toolbar-container');
