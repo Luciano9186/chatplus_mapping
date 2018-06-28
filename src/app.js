@@ -182,7 +182,15 @@ app.AppView = joint.mvc.View.extend({
             if (elementView.model.get('type') === 'qad.Normal' && !elementView.model.get('isDrag')) {
                 var halo = new joint.ui.Halo({
                     cellView: elementView,
-                    boxContent: false
+                    boxContent: false,
+					clone: function(cell, opt) {
+						var cellClone = cell.clone().unset('z');
+						var cellId = cell.get('id').split('_')[0];
+						var cellCloneId = cellId+"_"+Math.floor(Date.now() / 1000);
+						//udpate new Id for cell
+						cellClone.set('id', cellCloneId);
+						return cellClone;
+					}
                 });
 
                 halo.removeHandle('resize')
